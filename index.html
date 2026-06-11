@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Belle Créole — Gîte familial en Guadeloupe</title>
+<meta name="description" content="Trois maisons créoles fleuries tenues par une famille guadeloupéenne depuis 1995. Mer turquoise à 10 minutes. Réservez en direct, sans intermédiaire.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════ NAVIGATION ═══════════════ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#accueil" class="nav-logo">La Belle <em>Créole</em></a>
+    <nav class="nav-menu" aria-label="Navigation principale">
+      <a href="#logements" class="nav-item">Logements</a>
+      <a href="#histoire" class="nav-item">Notre histoire</a>
+      <a href="#avis" class="nav-item">Avis</a>
+      <a href="#contact" class="nav-item">Contact</a>
+    </nav>
+    <a href="#contact" class="nav-cta">Réserver</a>
+    <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="accueil">
+  <div class="hero-left">
+    <div class="hero-stripe" aria-hidden="true"></div>
+    <p class="eyebrow">Guadeloupe · Antilles françaises</p>
+    <h1 class="hero-title">L'authenticité<br>créole,<br><em>en famille</em></h1>
+    <p class="hero-desc">Une famille guadeloupéenne vous ouvre ses portes depuis 1995. Trois maisons fleuries, un jardin tropical, la mer turquoise à 10 minutes à pied.</p>
+    <div class="hero-actions">
+      <a href="#logements" class="btn btn-primary">Voir les logements</a>
+      <a href="#histoire" class="btn btn-text">Notre histoire</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="bk-card">
+      <h2 class="bk-title">Vérifier les <em>disponibilités</em></h2>
+      <form class="bk-form" id="bkForm">
+        <div class="bk-grid">
+          <label class="bk-field">
+            <span class="bk-label">Arrivée</span>
+            <input type="date" name="arrivee" required>
+          </label>
+          <label class="bk-field">
+            <span class="bk-label">Départ</span>
+            <input type="date" name="depart" required>
+          </label>
+          <label class="bk-field">
+            <span class="bk-label">Logement</span>
+            <select name="logement">
+              <option value="Pas de préférence">Pas de préférence</option>
+              <option value="Maison Alamanda">Maison Alamanda — 4 pers.</option>
+              <option value="Villa Bougainvillier">Villa Bougainvillier — 6 pers.</option>
+              <option value="Studio Frangipanier">Studio Frangipanier — 3 pers.</option>
+            </select>
+          </label>
+          <label class="bk-field">
+            <span class="bk-label">Voyageurs</span>
+            <select name="voyageurs">
+              <option>1 personne</option>
+              <option selected>2 personnes</option>
+              <option>3 personnes</option>
+              <option>4 personnes</option>
+              <option>5 personnes</option>
+              <option>6 personnes</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Demander la disponibilité</button>
+        <p class="bk-note">Réponse sous 24h, directement par nous — pas de commission de plateforme.</p>
+      </form>
+      <div class="bk-stats">
+        <div class="bk-stat"><span class="bk-stat-n">3</span><span class="bk-stat-l">Maisons</span></div>
+        <div class="bk-stat"><span class="bk-stat-n">30 ans</span><span class="bk-stat-l">D'accueil</span></div>
+        <div class="bk-stat"><span class="bk-stat-n">4.9 ★</span><span class="bk-stat-l">Avis clients</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BANDEAU OR ═══════════════ -->
+<div class="bandeau bandeau-or">
+  <p class="bandeau-text">Maisons créoles fleuries, dans un écrin de végétation tropicale</p>
+  <span class="bandeau-badge">Authenticité · Famille</span>
+</div>
+
+<!-- ═══════════════ LOGEMENTS ═══════════════ -->
+<section class="logements" id="logements">
+  <div class="sec-head">
+    <p class="eyebrow eyebrow-center">Nos hébergements</p>
+    <h2 class="sec-title">Trois maisons, <em>trois fleurs</em></h2>
+    <p class="sec-sub">Chaque logement porte le nom d'une fleur de notre jardin — celle qui, depuis toujours, pousse devant sa porte.</p>
+  </div>
+
+  <div class="cards">
+
+    <article class="card card-h">
+      <div class="card-body">
+        <div class="card-top">
+          <h3 class="card-name">Maison Alamanda</h3>
+          <span class="card-pers">4 pers. · 2 ch.</span>
+        </div>
+        <p class="card-desc">Une maison lumineuse au cœur du jardin, sous les fleurs jaunes de l'alamanda. Terrasse couverte, cuisine équipée, vue sur la végétation tropicale. Idéale pour un couple ou une petite famille.</p>
+        <ul class="card-amenities">
+          <li>2 chambres</li>
+          <li>Terrasse couverte</li>
+          <li>Cuisine équipée</li>
+          <li>Climatisation</li>
+        </ul>
+        <div class="card-sep"></div>
+        <div class="card-foot">
+          <div class="card-price">95 € <span>/ nuit</span></div>
+          <a href="#contact" class="card-link" data-logement="Maison Alamanda">Demander à réserver</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card card-o">
+      <div class="card-body">
+        <div class="card-top">
+          <h3 class="card-name">Villa Bougainvillier</h3>
+          <span class="card-pers">6 pers. · 3 ch.</span>
+        </div>
+        <p class="card-desc">La plus grande de nos maisons, nommée pour les bougainvilliers qui couvrent sa façade depuis des années. Grande terrasse, cuisine extérieure, espace généreux pour les familles nombreuses ou deux familles réunies.</p>
+        <ul class="card-amenities">
+          <li>3 chambres</li>
+          <li>Grande terrasse</li>
+          <li>Cuisine extérieure</li>
+          <li>Parking privé</li>
+        </ul>
+        <div class="card-sep"></div>
+        <div class="card-foot">
+          <div class="card-price">145 € <span>/ nuit</span></div>
+          <a href="#contact" class="card-link" data-logement="Villa Bougainvillier">Demander à réserver</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card card-t">
+      <div class="card-body">
+        <div class="card-top">
+          <h3 class="card-name">Studio Frangipanier</h3>
+          <span class="card-pers">3 pers. · 1 ch.</span>
+        </div>
+        <p class="card-desc">Un studio cosy à l'ombre du frangipanier, pour un séjour en couple ou en solo. Cuisine équipée, hamac sur la terrasse, calme absolu. Le bon compromis entre intimité et convivialité du jardin commun.</p>
+        <ul class="card-amenities">
+          <li>1 chambre</li>
+          <li>Hamac extérieur</li>
+          <li>Cuisine équipée</li>
+          <li>Wifi</li>
+        </ul>
+        <div class="card-sep"></div>
+        <div class="card-foot">
+          <div class="card-price">65 € <span>/ nuit</span></div>
+          <a href="#contact" class="card-link" data-logement="Studio Frangipanier">Demander à réserver</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ═══════════════ BANDEAU TURQUOISE ═══════════════ -->
+<div class="bandeau bandeau-t">
+  <p class="bandeau-text">La mer turquoise, à seulement 10 minutes à pied</p>
+  <span class="bandeau-badge bandeau-badge-t">Guadeloupe · Antilles</span>
+</div>
+
+<!-- ═══════════════ NOTRE HISTOIRE ═══════════════ -->
+<section class="histoire" id="histoire">
+  <div class="histoire-inner">
+    <div class="histoire-text">
+      <p class="eyebrow">Depuis 1995</p>
+      <h2 class="sec-title">Une histoire <em>de famille</em></h2>
+      <p class="histoire-p">Nos parents ont grandi ici, sur cette terre, avec ses odeurs de fleurs de frangipanier le matin, ses bougainvilliers qui débordent sur les chemins, ses alamandas jaunes que le soleil fait briller. La Guadeloupe, ils la connaissent dans les os. Pas comme un décor — comme une maison.</p>
+      <p class="histoire-p">Il y a trente ans, ils ont décidé d'en faire une maison pour d'autres aussi. Pas pour en faire un commerce froid — pour prolonger la tradition créole de l'accueil. Celle où l'on reçoit bien, où l'on prend le temps, où l'on fait sentir aux gens qu'ils sont attendus.</p>
+      <p class="histoire-p histoire-signature">Ici, on est chez nous. Et vous y êtes les bienvenus.</p>
+    </div>
+    <div class="histoire-quote">
+      <blockquote>
+        <p>« Chaque fleur a son nom. Chaque maison, son âme. »</p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ VALEURS ═══════════════ -->
+<section class="valeurs" id="avis">
+  <div class="sec-head">
+    <p class="eyebrow eyebrow-center">Pourquoi nous choisir</p>
+    <h2 class="sec-title">L'esprit <em>créole</em>, depuis toujours</h2>
+  </div>
+  <div class="val-grid">
+    <div class="val-item">
+      <div class="val-n" style="color:var(--hibiscus);">30</div>
+      <div class="val-t">Ans d'accueil</div>
+      <div class="val-d">Une famille guadeloupéenne vous accueille avec la même chaleur depuis 1995</div>
+    </div>
+    <div class="val-item">
+      <div class="val-n" style="color:var(--turquoise);">10'</div>
+      <div class="val-t">De la mer</div>
+      <div class="val-d">Plages de sable et eaux turquoise à proximité immédiate, à pied</div>
+    </div>
+    <div class="val-item">
+      <div class="val-n" style="color:var(--or);">3</div>
+      <div class="val-t">Maisons fleuries</div>
+      <div class="val-d">Chaque maison porte le nom d'une fleur de notre jardin, plantée il y a longtemps</div>
+    </div>
+    <div class="val-item">
+      <div class="val-n" style="color:var(--vert);">4.9</div>
+      <div class="val-t">Note clients</div>
+      <div class="val-d">Des centaines de familles satisfaites, saison après saison</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-text">
+      <p class="eyebrow">Réservation directe</p>
+      <h2 class="sec-title">Réservez <em>sans intermédiaire</em></h2>
+      <p class="contact-desc">En réservant directement avec nous, pas de commission de plateforme — et un échange direct pour préparer votre séjour comme il se doit. Nous répondons sous 24h.</p>
+
+      <div class="contact-methods">
+        <a href="https://wa.me/590600000000" class="contact-method" target="_blank" rel="noopener">
+          <span class="contact-method-label">WhatsApp</span>
+          <span class="contact-method-value">+590 6 90 00 00 00</span>
+        </a>
+        <a href="mailto:contact@labellecreole-guadeloupe.com" class="contact-method">
+          <span class="contact-method-label">Email</span>
+          <span class="contact-method-value">contact@labellecreole-guadeloupe.com</span>
+        </a>
+        <div class="contact-method">
+          <span class="contact-method-label">Adresse</span>
+          <span class="contact-method-value">Guadeloupe, Antilles françaises</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <form class="contact-form" id="contactForm">
+        <h3 class="bk-title">Une question, une demande ?</h3>
+        <label class="bk-field bk-field-full">
+          <span class="bk-label">Nom</span>
+          <input type="text" name="nom" required>
+        </label>
+        <label class="bk-field bk-field-full">
+          <span class="bk-label">Email</span>
+          <input type="email" name="email" required>
+        </label>
+        <label class="bk-field bk-field-full">
+          <span class="bk-label">Message</span>
+          <textarea name="message" rows="4" placeholder="Dates envisagées, nombre de personnes, logement souhaité..."></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary btn-block">Envoyer la demande</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">La Belle <em>Créole</em></div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Mentions légales</a>
+      <a href="#" class="footer-link">CGV</a>
+      <a href="#contact" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 · Réservation directe · Guadeloupe</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
