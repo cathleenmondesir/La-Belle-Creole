@@ -3,331 +3,398 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>La Belle Créole — Gîtes à Sainte-Anne, Guadeloupe</title>
-  <meta name="description" content="Depuis 1995, La Belle Créole accueille les voyageurs dans 5 logements authentiques nichés entre mer et forêt tropicale à Sainte-Anne, Guadeloupe." />
+  <meta name="description" content="La Belle Créole — Gîtes de luxe à Sainte-Anne, Guadeloupe. Cinq logements familiaux nichés dans un jardin tropical autour d'une piscine commune." />
+  <title>La Belle Créole — Gîtes de charme, Sainte-Anne, Guadeloupe</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════ NAV ═══════════════════════ -->
-  <header class="nav-header" id="nav-header">
-    <nav class="nav-inner" aria-label="Navigation principale">
-      <a href="#accueil" class="nav-logo">La Belle Créole</a>
-      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-menu" id="nav-menu" role="list">
-        <li><a href="#accueil" class="nav-link">Accueil</a></li>
+  <!-- ═══════════════════════════════════════════
+       NAV — Sticky, backdrop blur
+  ═══════════════════════════════════════════ -->
+  <header class="nav-wrapper" role="banner">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="nav-logo" aria-label="La Belle Créole — accueil">La Belle Créole</a>
+      <ul class="nav-links" id="nav-links" role="list">
         <li><a href="#logements" class="nav-link">Logements</a></li>
-        <li><a href="#piscine" class="nav-link">Piscine</a></li>
-        <li><a href="#histoire" class="nav-link">Histoire</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#histoire" class="nav-link">Notre histoire</a></li>
+        <li><a href="#contact" class="nav-link nav-link--cta">Contact</a></li>
       </ul>
+      <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="Ouvrir le menu">
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+      </button>
     </nav>
   </header>
 
   <main>
 
-    <!-- ═══════════════════════ HERO ═══════════════════════ -->
-    <section class="hero" id="accueil" aria-label="Accueil">
-      <div class="photo-placeholder hero-photo" data-photo="cocotiers-piscine-vue-aerienne">
-        <span>PHOTO : Cocotiers et piscine vue aérienne</span>
+    <!-- ═══════════════════════════════════════════
+         HERO — Plein écran cinématique
+    ═══════════════════════════════════════════ -->
+    <section class="hero" aria-label="Bienvenue à La Belle Créole">
+      <div class="photo-placeholder hero-photo" data-photo="cocotiers-piscine-aerien" role="img" aria-label="Vue aérienne des cocotiers et de la piscine">
+        <span>PHOTO : Vue aérienne — cocotiers et piscine au coucher du soleil</span>
       </div>
       <div class="hero-overlay" aria-hidden="true"></div>
       <div class="hero-content">
-        <p class="hero-surtitre">Sainte-Anne · Guadeloupe</p>
-        <h1 class="hero-title">L'authenticité créole,<br /><em>en famille</em></h1>
+        <p class="hero-eyebrow">Sainte-Anne · Guadeloupe</p>
+        <h1 class="hero-title">L'authenticité créole,<br><em>en famille</em></h1>
         <div class="hero-ctas">
-          <a href="#logements" class="btn btn-hibiscus">Découvrir les logements</a>
-          <a href="#histoire" class="btn btn-outline">Notre histoire</a>
+          <a href="#logements" class="btn btn--primary">Découvrir les logements</a>
+          <a href="#histoire" class="btn btn--ghost">Notre histoire</a>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════ BANDEAU CHIFFRES ═══════════════════════ -->
-    <section class="bandeau" aria-label="Chiffres clés">
-      <div class="bandeau-inner">
-        <span class="bandeau-item">30 ans</span>
-        <span class="bandeau-sep" aria-hidden="true">·</span>
-        <span class="bandeau-item">5 logements</span>
-        <span class="bandeau-sep" aria-hidden="true">·</span>
-        <span class="bandeau-item">Piscine</span>
-        <span class="bandeau-sep" aria-hidden="true">·</span>
-        <span class="bandeau-item">4.9 <span class="star" aria-label="étoiles sur cinq">★</span></span>
+    <!-- ═══════════════════════════════════════════
+         BANDEAU CHIFFRES
+    ═══════════════════════════════════════════ -->
+    <section class="bandeau-chiffres reveal" aria-label="En quelques chiffres">
+      <div class="container">
+        <ul class="chiffres-list" role="list">
+          <li class="chiffre-item">
+            <span class="chiffre-number">30 ans</span>
+            <span class="chiffre-label">d'accueil</span>
+          </li>
+          <li class="chiffre-sep-item" aria-hidden="true"><span class="chiffre-sep">·</span></li>
+          <li class="chiffre-item">
+            <span class="chiffre-number">5</span>
+            <span class="chiffre-label">logements</span>
+          </li>
+          <li class="chiffre-sep-item" aria-hidden="true"><span class="chiffre-sep">·</span></li>
+          <li class="chiffre-item">
+            <span class="chiffre-number">Piscine</span>
+            <span class="chiffre-label">commune</span>
+          </li>
+          <li class="chiffre-sep-item" aria-hidden="true"><span class="chiffre-sep">·</span></li>
+          <li class="chiffre-item">
+            <span class="chiffre-number">4.9★</span>
+            <span class="chiffre-label">sur Airbnb</span>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ═══════════════════════ LOGEMENTS ═══════════════════════ -->
+    <!-- ═══════════════════════════════════════════
+         LOGEMENTS — 5 cartes
+    ═══════════════════════════════════════════ -->
     <section class="logements" id="logements" aria-labelledby="logements-titre">
       <div class="container">
-        <div class="section-header reveal">
-          <p class="label-jost">Nos logements</p>
-          <h2 id="logements-titre" class="section-title">Cinq havres de paix,<br /><em>chacun avec son caractère</em></h2>
-        </div>
+        <header class="section-header reveal">
+          <p class="section-eyebrow">Nos logements</p>
+          <h2 class="section-title" id="logements-titre">Cinq espaces,<br><em>une même âme créole</em></h2>
+          <p class="section-intro">Chaque logement a sa propre personnalité, ses propres couleurs. Tous partagent le même jardin tropical et la piscine commune.</p>
+        </header>
 
         <div class="logements-grid">
 
-          <!-- Hibiscus -->
-          <article class="logement-card reveal" data-accent="hibiscus" data-logement="Hibiscus">
-            <div class="card-photo photo-placeholder" data-photo="case-creole-hibiscus-facade">
-              <span>PHOTO : Case créole Hibiscus — façade et galerie</span>
+          <!-- Rangée haute : 2 colonnes — Hibiscus + Croton -->
+          <article class="card card--hibiscus reveal" data-logement="Case créole «Hibiscus» — 2 chambres" aria-label="Case créole Hibiscus">
+            <div class="photo-placeholder card-photo" data-photo="case-creole-hibiscus-exterieur" role="img" aria-label="Extérieur de la case créole Hibiscus">
+              <span>PHOTO : Case créole Hibiscus — façade et jardin</span>
             </div>
             <div class="card-body">
-              <h3 class="card-name">Case créole <em>«&nbsp;Hibiscus&nbsp;»</em></h3>
-              <p class="card-desc">Case créole traditionnelle au charme authentique, avec galerie couverte et jardin privatif fleuri.</p>
-              <p class="card-capacity">2 chambres</p>
-              <p class="card-price"><span class="price-amount">[TARIF]</span> <span class="price-unit">€ / nuit</span></p>
-              <button class="btn btn-reserver" data-logement="Hibiscus">Demander à réserver</button>
+              <div class="card-header-row">
+                <div>
+                  <p class="card-eyebrow">Case créole</p>
+                  <h3 class="card-title">Hibiscus</h3>
+                </div>
+                <span class="card-badge card-badge--hibiscus">2 chambres</span>
+              </div>
+              <p class="card-capacity">Jusqu'à 4 personnes</p>
+              <p class="card-desc">La seule case créole du domaine, avec sa grande véranda en bois et ses volets colorés. Un logement ancré dans la tradition antillaise, entouré d'hibiscus en fleurs. Idéal pour les familles souhaitant l'authenticité.</p>
+              <div class="card-footer">
+                <p class="card-price"><span class="card-price-amount">[TARIF]€</span> <span class="card-price-unit">/ nuit</span></p>
+                <button class="btn btn--reserve" data-logement="Case créole «Hibiscus» — 2 chambres">Demander à réserver</button>
+              </div>
             </div>
           </article>
 
-          <!-- Croton -->
-          <article class="logement-card reveal" data-accent="turquoise" data-logement="Croton">
-            <div class="card-photo photo-placeholder" data-photo="appartement-croton-salon-lumineux">
+          <article class="card card--croton reveal" data-logement="Appartement «Croton» — 2 chambres + canapé-lit" aria-label="Appartement Croton">
+            <div class="photo-placeholder card-photo" data-photo="appartement-croton-salon" role="img" aria-label="Salon de l'appartement Croton">
               <span>PHOTO : Appartement Croton — salon lumineux</span>
             </div>
             <div class="card-body">
-              <h3 class="card-name">Appartement <em>«&nbsp;Croton&nbsp;»</em></h3>
-              <p class="card-desc">Lumineux et coloré comme la plante qui lui prête son nom, avec vue sur le jardin tropical.</p>
-              <p class="card-capacity">2 chambres + canapé-lit</p>
-              <p class="card-price"><span class="price-amount">[TARIF]</span> <span class="price-unit">€ / nuit</span></p>
-              <button class="btn btn-reserver" data-logement="Croton">Demander à réserver</button>
+              <div class="card-header-row">
+                <div>
+                  <p class="card-eyebrow">Appartement</p>
+                  <h3 class="card-title">Croton</h3>
+                </div>
+                <span class="card-badge card-badge--croton">2 ch. + canapé-lit</span>
+              </div>
+              <p class="card-capacity">Jusqu'à 6 personnes</p>
+              <p class="card-desc">Un appartement lumineux aux accents tropicaux, décoré dans les teintes du croton — jaune, orange et vert. Deux chambres confortables et un canapé-lit pour accueillir toute la famille. Terrasse privée donnant sur le jardin.</p>
+              <div class="card-footer">
+                <p class="card-price"><span class="card-price-amount">[TARIF]€</span> <span class="card-price-unit">/ nuit</span></p>
+                <button class="btn btn--reserve" data-logement="Appartement «Croton» — 2 chambres + canapé-lit">Demander à réserver</button>
+              </div>
             </div>
           </article>
 
-          <!-- Isora -->
-          <article class="logement-card reveal" data-accent="vert" data-logement="Isora">
-            <div class="card-photo photo-placeholder" data-photo="appartement-isora-terrasse-ombragee">
-              <span>PHOTO : Appartement Isora — terrasse ombragée</span>
+          <!-- Rangée basse : 3 colonnes — Isora, Jasmin, Alamanda -->
+          <article class="card card--isora reveal" data-logement="Appartement «Isora» — 2 chambres + canapé-lit" aria-label="Appartement Isora">
+            <div class="photo-placeholder card-photo" data-photo="appartement-isora-chambre" role="img" aria-label="Chambre de l'appartement Isora">
+              <span>PHOTO : Appartement Isora — chambre principale</span>
             </div>
             <div class="card-body">
-              <h3 class="card-name">Appartement <em>«&nbsp;Isora&nbsp;»</em></h3>
-              <p class="card-desc">Niché dans la verdure, cet appartement offre une terrasse ombragée idéale pour les matinées tropicales.</p>
-              <p class="card-capacity">2 chambres + canapé-lit</p>
-              <p class="card-price"><span class="price-amount">[TARIF]</span> <span class="price-unit">€ / nuit</span></p>
-              <button class="btn btn-reserver" data-logement="Isora">Demander à réserver</button>
+              <div class="card-header-row">
+                <div>
+                  <p class="card-eyebrow">Appartement</p>
+                  <h3 class="card-title">Isora</h3>
+                </div>
+                <span class="card-badge card-badge--isora">2 ch. + canapé-lit</span>
+              </div>
+              <p class="card-capacity">Jusqu'à 6 personnes</p>
+              <p class="card-desc">Isora, plante grimpante aux fleurs écarlates, donne son nom à cet appartement chaleureux. Espaces bien agencés, cuisine équipée, deux chambres lumineuses.</p>
+              <div class="card-footer">
+                <p class="card-price"><span class="card-price-amount">[TARIF]€</span> <span class="card-price-unit">/ nuit</span></p>
+                <button class="btn btn--reserve" data-logement="Appartement «Isora» — 2 chambres + canapé-lit">Demander à réserver</button>
+              </div>
             </div>
           </article>
 
-          <!-- Jasmin -->
-          <article class="logement-card reveal" data-accent="gris" data-logement="Jasmin">
-            <div class="card-photo photo-placeholder" data-photo="appartement-jasmin-chambre-principale">
-              <span>PHOTO : Appartement Jasmin — chambre principale</span>
+          <article class="card card--jasmin reveal" data-logement="Appartement «Jasmin» — 2 chambres + canapé-lit" aria-label="Appartement Jasmin">
+            <div class="photo-placeholder card-photo" data-photo="appartement-jasmin-terrasse" role="img" aria-label="Terrasse de l'appartement Jasmin">
+              <span>PHOTO : Appartement Jasmin — terrasse et jardin</span>
             </div>
             <div class="card-body">
-              <h3 class="card-name">Appartement <em>«&nbsp;Jasmin&nbsp;»</em></h3>
-              <p class="card-desc">Élégant et parfumé, avec finitions soignées et décoration inspirée des arts créoles.</p>
-              <p class="card-capacity">2 chambres + canapé-lit</p>
-              <p class="card-price"><span class="price-amount">[TARIF]</span> <span class="price-unit">€ / nuit</span></p>
-              <button class="btn btn-reserver" data-logement="Jasmin">Demander à réserver</button>
+              <div class="card-header-row">
+                <div>
+                  <p class="card-eyebrow">Appartement</p>
+                  <h3 class="card-title">Jasmin</h3>
+                </div>
+                <span class="card-badge card-badge--jasmin">2 ch. + canapé-lit</span>
+              </div>
+              <p class="card-capacity">Jusqu'à 6 personnes</p>
+              <p class="card-desc">Le parfum du jasmin guide jusqu'à cet appartement cosy, idéalement placé entre jardin et piscine. Une décoration douce aux tons neutres, pour des vacances au calme.</p>
+              <div class="card-footer">
+                <p class="card-price"><span class="card-price-amount">[TARIF]€</span> <span class="card-price-unit">/ nuit</span></p>
+                <button class="btn btn--reserve" data-logement="Appartement «Jasmin» — 2 chambres + canapé-lit">Demander à réserver</button>
+              </div>
             </div>
           </article>
 
-          <!-- Alamanda -->
-          <article class="logement-card reveal" data-accent="or" data-logement="Alamanda">
-            <div class="card-photo photo-placeholder" data-photo="appartement-alamanda-vue-jardin-fleuri">
-              <span>PHOTO : Appartement Alamanda — vue jardin fleuri</span>
+          <article class="card card--alamanda reveal" data-logement="Appartement «Alamanda» — 1 chambre + canapé-lit" aria-label="Appartement Alamanda">
+            <div class="photo-placeholder card-photo" data-photo="appartement-alamanda-interieur" role="img" aria-label="Intérieur de l'appartement Alamanda">
+              <span>PHOTO : Appartement Alamanda — intérieur intime</span>
             </div>
             <div class="card-body">
-              <h3 class="card-name">Appartement <em>«&nbsp;Alamanda&nbsp;»</em></h3>
-              <p class="card-desc">Cosy et intime, parfait pour un couple ou une petite famille, baigné d'une lumière dorée.</p>
-              <p class="card-capacity">1 chambre + canapé-lit</p>
-              <p class="card-price"><span class="price-amount">[TARIF]</span> <span class="price-unit">€ / nuit</span></p>
-              <button class="btn btn-reserver" data-logement="Alamanda">Demander à réserver</button>
+              <div class="card-header-row">
+                <div>
+                  <p class="card-eyebrow">Appartement</p>
+                  <h3 class="card-title">Alamanda</h3>
+                </div>
+                <span class="card-badge card-badge--alamanda">1 ch. + canapé-lit</span>
+              </div>
+              <p class="card-capacity">Jusqu'à 4 personnes</p>
+              <p class="card-desc">Le plus intime de nos appartements. Décoré dans les teintes dorées de l'alamanda, il est parfait pour un couple ou une petite famille souhaitant un nid douillet en Guadeloupe.</p>
+              <div class="card-footer">
+                <p class="card-price"><span class="card-price-amount">[TARIF]€</span> <span class="card-price-unit">/ nuit</span></p>
+                <button class="btn btn--reserve" data-logement="Appartement «Alamanda» — 1 chambre + canapé-lit">Demander à réserver</button>
+              </div>
             </div>
           </article>
 
-        </div>
+        </div><!-- /.logements-grid -->
       </div>
     </section>
 
-    <!-- ═══════════════════════ PISCINE BANNER ═══════════════════════ -->
-    <section class="piscine-banner" id="piscine" aria-labelledby="piscine-titre">
-      <div class="photo-placeholder piscine-photo" data-photo="piscine-commune-soleil">
-        <span>PHOTO : Piscine commune au soleil couchant</span>
+    <!-- ═══════════════════════════════════════════
+         PISCINE — Bannière plein largeur
+    ═══════════════════════════════════════════ -->
+    <section class="piscine-banner reveal" aria-labelledby="piscine-titre">
+      <div class="photo-placeholder piscine-photo" data-photo="piscine-commune-nuit" role="img" aria-label="La piscine commune illuminée la nuit">
+        <span>PHOTO : Piscine commune — reflets nocturnes dans le jardin tropical</span>
       </div>
       <div class="piscine-overlay" aria-hidden="true"></div>
-      <div class="piscine-content reveal">
-        <p class="label-jost label-light">Espace commun</p>
-        <h2 id="piscine-titre" class="piscine-title">La piscine</h2>
-        <p class="piscine-desc">Un espace de partage et de détente, ouvert à tous les hôtes de la propriété,<br />au cœur d'un jardin tropical luxuriant.</p>
+      <div class="piscine-content">
+        <p class="piscine-eyebrow">Espace commun</p>
+        <h2 class="piscine-title" id="piscine-titre">La piscine</h2>
+        <p class="piscine-desc">Un bassin partagé entre les cinq logements, entouré de transats et de végétation tropicale. L'endroit idéal pour se retrouver au coucher du soleil, entre voisins de vacances devenus amis.</p>
       </div>
     </section>
 
-    <!-- ═══════════════════════ NOTRE HISTOIRE ═══════════════════════ -->
+    <!-- ═══════════════════════════════════════════
+         NOTRE HISTOIRE
+    ═══════════════════════════════════════════ -->
     <section class="histoire" id="histoire" aria-labelledby="histoire-titre">
-      <div class="container histoire-inner">
-
-        <div class="histoire-texte">
-          <div class="histoire-ornament reveal" aria-hidden="true">❧</div>
-          <div class="reveal">
-            <p class="label-jost">Notre histoire</p>
-            <h2 id="histoire-titre" class="section-title">Une famille,<br /><em>trente ans d'hospitalité</em></h2>
-          </div>
-          <p class="histoire-para reveal">Depuis 1995, Jean-Pierre et Marie-Claire Desmarais accueillent les voyageurs dans leur propriété familiale nichée entre mer et forêt tropicale à Sainte-Anne, Guadeloupe. Ce qui a commencé comme une simple case créole s'est développé en un ensemble de cinq logements, chacun baptisé du nom d'une plante de leur jardin.</p>
-          <p class="histoire-para reveal">La famille met un point d'honneur à préserver l'authenticité et la chaleur de l'accueil antillais.</p>
-          <blockquote class="histoire-quote reveal">
-            <p>« Ici, on est chez nous.<br /><em>Et vous y êtes les bienvenus.</em> »</p>
-            <cite>— Jean-Pierre &amp; Marie-Claire Desmarais</cite>
-          </blockquote>
+      <div class="container container--narrow">
+        <div class="histoire-ornament reveal" aria-hidden="true">◆</div>
+        <header class="section-header reveal">
+          <p class="section-eyebrow">Notre histoire</p>
+          <h2 class="section-title" id="histoire-titre"><em>Depuis 1995</em></h2>
+        </header>
+        <div class="histoire-body reveal">
+          <p>Depuis 1995, Marie et Jean-Pierre Lacroix accueillent les voyageurs dans leur propriété familiale de Sainte-Anne, Guadeloupe. Ce qui a commencé comme un rêve partagé — offrir aux visiteurs un accueil authentique, loin des hôtels standardisés — est devenu <strong>La Belle Créole</strong> : cinq logements nichés dans un jardin tropical, autour d'une piscine commune.</p>
+          <p>Chaque logement porte le nom d'une fleur du jardin. Chaque détail a été pensé par la famille : les meubles chinés, les tissus madras, la végétation soignée. Ici, l'hospitalité n'est pas un service — c'est une façon d'être.</p>
+          <p>Leurs enfants ont grandi entre les cocotiers et les bougainvilliers. Aujourd'hui, ils participent à leur tour à faire vivre ce lieu unique, transmettre la culture créole et partager la beauté de leur île avec le monde entier.</p>
         </div>
-
-        <div class="histoire-photos">
-          <div class="photo-placeholder histoire-photo-1 reveal" data-photo="famille-desmarais-jardin-tropical">
-            <span>PHOTO : La famille Desmarais dans le jardin tropical</span>
-          </div>
-          <div class="photo-placeholder histoire-photo-2 reveal" data-photo="detail-boiseries-creoles">
-            <span>PHOTO : Détail boiseries créoles traditionnelles</span>
-          </div>
-        </div>
-
+        <blockquote class="histoire-quote reveal">
+          <p>« Ici, on est chez nous.<br>Et vous y êtes les bienvenus. »</p>
+          <cite>Marie &amp; Jean-Pierre Lacroix</cite>
+        </blockquote>
       </div>
     </section>
 
-    <!-- ═══════════════════════ VALEURS ═══════════════════════ -->
-    <section class="valeurs" aria-labelledby="valeurs-titre">
+    <!-- ═══════════════════════════════════════════
+         VALEURS — 4 stats
+    ═══════════════════════════════════════════ -->
+    <section class="valeurs reveal" aria-label="Nos engagements">
       <div class="container">
-        <h2 id="valeurs-titre" class="sr-only">Nos engagements en chiffres</h2>
-        <div class="valeurs-grid">
-          <div class="valeur-item reveal">
-            <span class="valeur-chiffre">30</span>
-            <span class="valeur-unite">ans</span>
-            <span class="valeur-label">d'expérience</span>
-          </div>
-          <div class="valeur-item reveal">
-            <span class="valeur-chiffre">5</span>
-            <span class="valeur-unite">logements</span>
-            <span class="valeur-label">uniques</span>
-          </div>
-          <div class="valeur-item reveal">
-            <span class="valeur-chiffre">1</span>
-            <span class="valeur-unite">piscine</span>
-            <span class="valeur-label">commune</span>
-          </div>
-          <div class="valeur-item reveal">
-            <span class="valeur-chiffre">4.9</span>
-            <span class="valeur-unite">/ 5</span>
-            <span class="valeur-label">avis voyageurs</span>
-          </div>
-        </div>
+        <ul class="valeurs-grid" role="list">
+          <li class="valeur-item">
+            <span class="valeur-number">30 ans</span>
+            <span class="valeur-label">d'accueil familial</span>
+          </li>
+          <li class="valeur-item">
+            <span class="valeur-number">5</span>
+            <span class="valeur-label">logements uniques</span>
+          </li>
+          <li class="valeur-item">
+            <span class="valeur-number">Famille</span>
+            <span class="valeur-label">guadeloupéenne</span>
+          </li>
+          <li class="valeur-item">
+            <span class="valeur-number">4.9★</span>
+            <span class="valeur-label">Airbnb</span>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <!-- ═══════════════════════ CONTACT ═══════════════════════ -->
+    <!-- ═══════════════════════════════════════════
+         CONTACT — Deux colonnes
+    ═══════════════════════════════════════════ -->
     <section class="contact" id="contact" aria-labelledby="contact-titre">
       <div class="container">
-        <div class="section-header reveal">
-          <p class="label-jost">Nous contacter</p>
-          <h2 id="contact-titre" class="section-title">Prêt à réserver<br /><em>votre séjour créole ?</em></h2>
-        </div>
+        <header class="section-header reveal">
+          <p class="section-eyebrow">Réservation &amp; contact</p>
+          <h2 class="section-title" id="contact-titre">Écrivez-nous</h2>
+          <p class="section-intro">Choisissez votre mode de contact préféré. Nous répondons dans les 24 heures.</p>
+        </header>
 
         <div class="contact-grid">
 
-          <!-- BOOKING FORM — WhatsApp -->
+          <!-- Colonne gauche : WhatsApp -->
           <div class="contact-col reveal">
-            <h3 class="contact-col-title">Demande de réservation</h3>
-            <p class="contact-col-sub">Nous vous répondons par WhatsApp sous 24h.</p>
-            <form class="form-whatsapp" id="form-whatsapp" novalidate>
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="wa-prenom">Prénom <span aria-hidden="true">*</span></label>
-                  <input type="text" id="wa-prenom" name="prenom" autocomplete="given-name" required placeholder="Marie" />
-                </div>
-                <div class="form-group">
-                  <label for="wa-nom">Nom <span aria-hidden="true">*</span></label>
-                  <input type="text" id="wa-nom" name="nom" autocomplete="family-name" required placeholder="Dupont" />
-                </div>
-              </div>
+            <div class="contact-col-header">
+              <p class="contact-col-method">WhatsApp</p>
+              <h3 class="contact-col-title">Demander à réserver</h3>
+              <p class="contact-col-desc">Envoyez-nous un message via WhatsApp. Nous vous répondons rapidement pour confirmer les disponibilités.</p>
+            </div>
+            <form class="form form--whatsapp" id="form-whatsapp" novalidate aria-label="Formulaire de réservation WhatsApp">
               <div class="form-group">
-                <label for="wa-tel">Téléphone <span aria-hidden="true">*</span></label>
-                <input type="tel" id="wa-tel" name="tel" autocomplete="tel" required placeholder="+33 6 12 34 56 78" />
-              </div>
-              <div class="form-group">
-                <label for="wa-logement">Logement souhaité</label>
-                <select id="wa-logement" name="logement">
+                <label class="form-label" for="wa-logement">Logement souhaité</label>
+                <select class="form-input form-select" id="wa-logement" name="logement">
                   <option value="">Pas de préférence</option>
-                  <option value="Hibiscus">Case créole Hibiscus</option>
-                  <option value="Croton">Appartement Croton</option>
-                  <option value="Isora">Appartement Isora</option>
-                  <option value="Jasmin">Appartement Jasmin</option>
-                  <option value="Alamanda">Appartement Alamanda</option>
+                  <option value="Case créole «Hibiscus» — 2 chambres">Case créole «Hibiscus» — 2 chambres</option>
+                  <option value="Appartement «Croton» — 2 chambres + canapé-lit">Appartement «Croton» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Isora» — 2 chambres + canapé-lit">Appartement «Isora» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Jasmin» — 2 chambres + canapé-lit">Appartement «Jasmin» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Alamanda» — 1 chambre + canapé-lit">Appartement «Alamanda» — 1 chambre + canapé-lit</option>
                 </select>
               </div>
               <div class="form-row">
                 <div class="form-group">
-                  <label for="wa-arrivee">Date d'arrivée <span aria-hidden="true">*</span></label>
-                  <input type="date" id="wa-arrivee" name="arrivee" required />
+                  <label class="form-label" for="wa-arrival">Arrivée</label>
+                  <input class="form-input" type="date" id="wa-arrival" name="arrival" required />
                 </div>
                 <div class="form-group">
-                  <label for="wa-depart">Date de départ <span aria-hidden="true">*</span></label>
-                  <input type="date" id="wa-depart" name="depart" required />
+                  <label class="form-label" for="wa-departure">Départ</label>
+                  <input class="form-input" type="date" id="wa-departure" name="departure" required />
                 </div>
               </div>
               <div class="form-group">
-                <label for="wa-personnes">Nombre de personnes <span aria-hidden="true">*</span></label>
-                <input type="number" id="wa-personnes" name="personnes" min="1" max="10" required placeholder="2" />
+                <label class="form-label" for="wa-name">Votre nom</label>
+                <input class="form-input" type="text" id="wa-name" name="name" placeholder="Prénom et nom" required />
               </div>
               <div class="form-group">
-                <label for="wa-message">Message (optionnel)</label>
-                <textarea id="wa-message" name="message" rows="3" placeholder="Questions ou informations complémentaires…"></textarea>
+                <label class="form-label" for="wa-phone">Téléphone</label>
+                <input class="form-input" type="tel" id="wa-phone" name="phone" placeholder="+33 6 …" />
               </div>
-              <button type="submit" class="btn btn-hibiscus btn-full">Envoyer via WhatsApp</button>
+              <div class="form-group">
+                <label class="form-label" for="wa-message">Message complémentaire</label>
+                <textarea class="form-input form-textarea" id="wa-message" name="message" rows="3" placeholder="Nombre de personnes, demandes particulières…"></textarea>
+              </div>
+              <button type="submit" class="btn btn--whatsapp btn--full">Envoyer via WhatsApp</button>
             </form>
           </div>
 
-          <!-- CONTACT FORM — mailto -->
+          <!-- Colonne droite : Email -->
           <div class="contact-col reveal">
-            <h3 class="contact-col-title">Question générale</h3>
-            <p class="contact-col-sub">Pour toute autre question, écrivez-nous par e-mail.</p>
-            <form class="form-mailto" id="form-mailto" novalidate>
+            <div class="contact-col-header">
+              <p class="contact-col-method">Email</p>
+              <h3 class="contact-col-title">Nous écrire</h3>
+              <p class="contact-col-desc">Pour toute question, renseignement ou demande spéciale, écrivez-nous directement par email.</p>
+            </div>
+            <form class="form form--email" id="form-email" novalidate aria-label="Formulaire de contact par email">
               <div class="form-group">
-                <label for="ml-nom">Nom <span aria-hidden="true">*</span></label>
-                <input type="text" id="ml-nom" name="nom" autocomplete="name" required placeholder="Marie Dupont" />
+                <label class="form-label" for="em-name">Votre nom</label>
+                <input class="form-input" type="text" id="em-name" name="name" placeholder="Prénom et nom" required />
               </div>
               <div class="form-group">
-                <label for="ml-email">Adresse e-mail <span aria-hidden="true">*</span></label>
-                <input type="email" id="ml-email" name="email" autocomplete="email" required placeholder="marie@exemple.com" />
+                <label class="form-label" for="em-email">Votre email</label>
+                <input class="form-input" type="email" id="em-email" name="email" placeholder="vous@exemple.com" required />
               </div>
               <div class="form-group">
-                <label for="ml-message">Message <span aria-hidden="true">*</span></label>
-                <textarea id="ml-message" name="message" rows="6" required placeholder="Votre message…"></textarea>
+                <label class="form-label" for="em-subject">Sujet</label>
+                <input class="form-input" type="text" id="em-subject" name="subject" placeholder="Demande de disponibilités — juillet 2026" />
               </div>
-              <button type="submit" class="btn btn-turquoise btn-full">Envoyer par e-mail</button>
+              <div class="form-group">
+                <label class="form-label" for="em-logement">Logement concerné</label>
+                <select class="form-input form-select" id="em-logement" name="logement">
+                  <option value="">Pas de préférence</option>
+                  <option value="Case créole «Hibiscus» — 2 chambres">Case créole «Hibiscus» — 2 chambres</option>
+                  <option value="Appartement «Croton» — 2 chambres + canapé-lit">Appartement «Croton» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Isora» — 2 chambres + canapé-lit">Appartement «Isora» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Jasmin» — 2 chambres + canapé-lit">Appartement «Jasmin» — 2 chambres + canapé-lit</option>
+                  <option value="Appartement «Alamanda» — 1 chambre + canapé-lit">Appartement «Alamanda» — 1 chambre + canapé-lit</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="em-message">Message</label>
+                <textarea class="form-input form-textarea" id="em-message" name="message" rows="5" placeholder="Décrivez votre séjour idéal, vos questions ou demandes particulières…" required></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full">Envoyer par email</button>
             </form>
-
-            <address class="contact-info">
-              <dl>
-                <dt class="label-jost">Adresse</dt>
-                <dd>Sainte-Anne, Guadeloupe</dd>
-                <dt class="label-jost">E-mail</dt>
-                <dd><a href="mailto:contact@labellecreole-guadeloupe.com">contact@labellecreole-guadeloupe.com</a></dd>
-                <dt class="label-jost">WhatsApp</dt>
-                <dd><a href="https://wa.me/590690000000" target="_blank" rel="noopener noreferrer">+590 690 00 00 00</a></dd>
-              </dl>
-            </address>
+            <p class="contact-email-direct">Ou écrivez directement à <a href="mailto:contact@labellecreole-guadeloupe.com" class="contact-email-link">contact@labellecreole-guadeloupe.com</a></p>
           </div>
 
-        </div>
+        </div><!-- /.contact-grid -->
       </div>
     </section>
 
   </main>
 
-  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
   <footer class="footer" role="contentinfo">
-    <div class="container footer-inner">
-      <div class="footer-brand">
-        <p class="footer-logo">La Belle Créole</p>
-        <p class="footer-tagline"><em>Authenticité créole depuis 1995</em></p>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-logo">La Belle Créole</p>
+          <p class="footer-tagline">Gîtes de charme<br>Sainte-Anne, Guadeloupe</p>
+        </div>
+        <div class="footer-info">
+          <address class="footer-address">
+            <p>Sainte-Anne, 97180 Guadeloupe</p>
+            <p><a href="mailto:contact@labellecreole-guadeloupe.com" class="footer-link">contact@labellecreole-guadeloupe.com</a></p>
+            <p><a href="https://wa.me/590690000000" class="footer-link" target="_blank" rel="noopener noreferrer">WhatsApp : +590 690 00 00 00</a></p>
+          </address>
+        </div>
+        <div class="footer-nav">
+          <ul role="list">
+            <li><a href="#logements" class="footer-link">Logements</a></li>
+            <li><a href="#histoire" class="footer-link">Notre histoire</a></li>
+            <li><a href="#contact" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-address">
-        <p>Sainte-Anne, Guadeloupe</p>
-        <p><a href="mailto:contact@labellecreole-guadeloupe.com">contact@labellecreole-guadeloupe.com</a></p>
-      </div>
-      <div class="footer-copy">
-        <p>&copy; <span id="footer-year"></span> La Belle Créole. Tous droits réservés.</p>
+      <div class="footer-bottom">
+        <p>&copy; <span id="footer-year"></span> La Belle Créole — Tous droits réservés</p>
       </div>
     </div>
   </footer>
