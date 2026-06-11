@@ -6,44 +6,100 @@
 (function () {
   'use strict';
 
-  /* ---- UTILS ---- */
+  /* ------------------------------------------------------------------ */
+  /* UTILS                                                                */
+  /* ------------------------------------------------------------------ */
 
   /**
-   * Format a date string (YYYY-MM-DD) to a human-readable French date.
+   * Format a YYYY-MM-DD date string to a readable French date.
    * @param {string} dateStr
    * @returns {string}
    */
   function formatDate(dateStr) {
     if (!dateStr) return '';
-    const date = new Date(dateStr + 'T12:00:00');
+    var date = new Date(dateStr + 'T12:00:00');
     if (isNaN(date.getTime())) return dateStr;
-    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    return date.toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   }
 
   /**
-   * Encode a string for WhatsApp URL.
-   * @param {string} str
-   * @returns {string}
+   * Validate an email address.
+   * @param {string} email
+   * @returns {boolean}
    */
-  function encodeWA(str) {
-    return encodeURIComponent(str);
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  /* ---- NAV SCROLL STATE ---- */
+  /**
+   * Display an inline validation error beneath a field.
+   * @param {HTMLFormElement} form
+   * @param {string} fieldSelector
+   * @param {string} message
+   */
+  function showFormError(form, fieldSelector, message) {
+    clearFormErrors(form);
+    var field = form.querySelector(fieldSelector);
+    if (!field) return;
+    field.setAttribute('aria-invalid', 'true');
+    field.style.borderColor = 'var(--hibiscus)';
+    field.style.boxShadow   = '0 0 0 3px rgba(194,59,90,0.14)';
+    var errorEl = document.createElement('p');
+    errorEl.className = 'form-error';
+    errorEl.setAttribute('role', 'alert');
+    errorEl.setAttribute('aria-live', 'polite');
+    errorEl.style.cssText =
+      'color:var(--hibiscus);font-size:0.78rem;margin-top:0.3rem;' +
+      'font-family:var(--font-sans);font-weight:300;';
+    errorEl.textContent = message;
+    field.parentNode.appendChild(errorEl);
+    field.focus();
+  }
+
+  /**
+   * Remove all validation error states from a form.
+   * @param {HTMLFormElement} form
+   */
+  function clearFormErrors(form) {
+    form.querySelectorAll('[aria-invalid]').forEach(function (el) {
+      el.removeAttribute('aria-invalid');
+      el.style.borderColor = '';
+      el.style.boxShadow   = '';
+    });
+    form.querySelectorAll('.form-error').forEach(function (el) {
+      el.remove();
+    });
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* NAV SCROLL SHADOW                                                    */
+  /* ------------------------------------------------------------------ */
+
   var nav = document.getElementById('site-nav');
   if (nav) {
     window.addEventListener('scroll', function () {
-      if (window.scrollY > 40) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      nav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
   }
 
-  /* ---- BURGER MENU ---- */
-  var burger    = document.getElementById('burger');
-  var navLinks  = document.getElementById('nav-links');
+  /* ------------------------------------------------------------------ */
+  /* BURGER MENU                                                          */
+  /* ------------------------------------------------------------------ */
+
+  var burger   = document.getElementById('burger');
+  var navLinks = document.getElementById('nav-links');
+
+  function closeMobileMenu() {
+    if (!navLinks || !burger) return;
+    navLinks.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Ouvrir le menu');
+    document.body.style.overflow = '';
+  }
 
   if (burger && navLinks) {
     burger.addEventListener('click', function () {
@@ -53,54 +109,45 @@
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close on nav link click
     navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navLinks.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-        burger.setAttribute('aria-label', 'Ouvrir le menu');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMobileMenu);
     });
 
-    // Close on outside click
     document.addEventListener('click', function (e) {
-      if (!nav.contains(e.target) && navLinks.classList.contains('open')) {
-        navLinks.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-        burger.setAttribute('aria-label', 'Ouvrir le menu');
-        document.body.style.overflow = '';
+      if (nav && !nav.contains(e.target) && navLinks.classList.contains('open')) {
+        closeMobileMenu();
       }
     });
 
-    // Close on Escape
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-        navLinks.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-        burger.setAttribute('aria-label', 'Ouvrir le menu');
-        document.body.style.overflow = '';
-        burger.focus();
+        closeMobileMenu();
+        if (burger) burger.focus();
       }
     });
   }
 
-  /* ---- SMOOTH SCROLL for nav anchors ---- */
+  /* ------------------------------------------------------------------ */
+  /* SMOOTH SCROLL — all anchor links                                     */
+  /* ------------------------------------------------------------------ */
+
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       var targetId = this.getAttribute('href').slice(1);
       if (!targetId) return;
       var target = document.getElementById(targetId);
-      if (target) {
-        e.preventDefault();
-        var navHeight = nav ? nav.offsetHeight : 72;
-        var top = target.getBoundingClientRect().top + window.scrollY - navHeight;
-        window.scrollTo({ top: top, behavior: 'smooth' });
-      }
+      if (!target) return;
+      e.preventDefault();
+      var navHeight = nav ? nav.offsetHeight : 72;
+      var top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+      window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
 
-  /* ---- INTERSECTION OBSERVER — reveal ---- */
+  /* ------------------------------------------------------------------ */
+  /* INTERSECTION OBSERVER — .reveal → .visible                          */
+  /* ------------------------------------------------------------------ */
+
   if ('IntersectionObserver' in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -118,28 +165,32 @@
       revealObserver.observe(el);
     });
   } else {
-    // Fallback for browsers without IntersectionObserver
+    /* Fallback: immediately show all elements */
     document.querySelectorAll('.reveal').forEach(function (el) {
       el.classList.add('visible');
     });
   }
 
-  /* ---- INTERSECTION OBSERVER — dynamic accent color ---- */
+  /* ------------------------------------------------------------------ */
+  /* INTERSECTION OBSERVER — dynamic --current-accent per section        */
+  /* ------------------------------------------------------------------ */
+
   if ('IntersectionObserver' in window) {
     var accentObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           var rawAccent = entry.target.getAttribute('data-accent');
           if (rawAccent) {
-            // rawAccent is like "--hibiscus" — set as var(--hibiscus)
-            var cssValue = 'var(' + rawAccent + ')';
-            document.documentElement.style.setProperty('--current-accent', cssValue);
+            /* rawAccent is e.g. "--hibiscus" → set as var(--hibiscus) */
+            document.documentElement.style.setProperty(
+              '--current-accent',
+              'var(' + rawAccent + ')'
+            );
           }
         }
       });
     }, {
-      threshold: 0.3,
-      rootMargin: '0px 0px 0px 0px'
+      threshold: 0.3
     });
 
     document.querySelectorAll('[data-accent]').forEach(function (section) {
@@ -147,43 +198,44 @@
     });
   }
 
-  /* ---- CHAPTER CTA BUTTONS — scroll to contact + pre-fill logement ---- */
+  /* ------------------------------------------------------------------ */
+  /* CHAPTER CTA BUTTONS — pre-fill logement + scroll to #contact        */
+  /* ------------------------------------------------------------------ */
+
   document.querySelectorAll('.chapter-cta[data-logement]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
+      /* The anchor href="#contact" is handled by smooth-scroll above.
+         Additionally, pre-fill the WhatsApp form select. */
       var logement = this.getAttribute('data-logement');
       if (!logement) return;
 
-      // Pre-fill the WhatsApp form select
       var waSelect = document.getElementById('wa-logement');
       if (waSelect) {
-        var option = waSelect.querySelector('option[value="' + logement + '"]');
-        if (option) {
+        var matchingOption = waSelect.querySelector(
+          'option[value="' + logement + '"]'
+        );
+        if (matchingOption) {
           waSelect.value = logement;
-          // Trigger a change event for any listeners
-          waSelect.dispatchEvent(new Event('change'));
+          waSelect.dispatchEvent(new Event('change', { bubbles: true }));
         }
       }
-      // The smooth scroll to #contact is already handled by the anchor click handler above.
-      // We just need to make sure focus goes to the first relevant field.
-      var contactSection = document.getElementById('contact');
-      if (contactSection) {
-        setTimeout(function () {
-          var navHeight = nav ? nav.offsetHeight : 72;
-          var top = contactSection.getBoundingClientRect().top + window.scrollY - navHeight;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-          if (waSelect) {
-            setTimeout(function () { waSelect.focus(); }, 600);
-          }
-        }, 0);
+
+      /* Delay focus on select until after scroll animation */
+      if (waSelect) {
+        setTimeout(function () { waSelect.focus(); }, 800);
       }
     });
   });
 
-  /* ---- WHATSAPP FORM ---- */
+  /* ------------------------------------------------------------------ */
+  /* WHATSAPP FORM                                                        */
+  /* ------------------------------------------------------------------ */
+
   var waForm = document.getElementById('whatsapp-form');
   if (waForm) {
     waForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      clearFormErrors(waForm);
 
       var logement = waForm.querySelector('#wa-logement').value.trim();
       var arrivee  = waForm.querySelector('#wa-arrivee').value;
@@ -192,17 +244,22 @@
       var tel      = waForm.querySelector('#wa-tel').value.trim();
       var message  = waForm.querySelector('#wa-message').value.trim();
 
-      // Basic validation
+      /* Validation */
       if (!logement) {
         showFormError(waForm, '#wa-logement', 'Veuillez sélectionner un logement.');
         return;
       }
-      if (!arrivee || !depart) {
-        showFormError(waForm, '#wa-arrivee', 'Veuillez indiquer vos dates de séjour.');
+      if (!arrivee) {
+        showFormError(waForm, '#wa-arrivee', "Veuillez indiquer la date d'arrivée.");
+        return;
+      }
+      if (!depart) {
+        showFormError(waForm, '#wa-depart', 'Veuillez indiquer la date de départ.');
         return;
       }
       if (new Date(depart) <= new Date(arrivee)) {
-        showFormError(waForm, '#wa-depart', 'La date de départ doit être après la date d\'arrivée.');
+        showFormError(waForm, '#wa-depart',
+          "La date de départ doit être postérieure à la date d'arrivée.");
         return;
       }
       if (!nom) {
@@ -210,45 +267,51 @@
         return;
       }
 
-      clearFormErrors(waForm);
-
-      var lines = [];
-      lines.push('Bonjour,');
-      lines.push('');
-      lines.push('Je souhaite faire une demande de réservation pour *La Belle Créole*.');
-      lines.push('');
-      lines.push('*Logement :* ' + logement);
-      lines.push('*Arrivée :* ' + formatDate(arrivee));
-      lines.push('*Départ :* ' + formatDate(depart));
-      lines.push('*Nom :* ' + nom);
-      if (tel) lines.push('*Téléphone :* ' + tel);
+      /* Build WhatsApp message */
+      var lines = [
+        'Bonjour,',
+        '',
+        'Je souhaite faire une demande de réservation pour *La Belle Créole*.',
+        '',
+        '*Logement :* ' + logement,
+        "*Arrivée :* "  + formatDate(arrivee),
+        '*Départ :* '   + formatDate(depart),
+        '*Nom :* '      + nom
+      ];
+      if (tel)     lines.push('*Téléphone :* ' + tel);
       if (message) { lines.push(''); lines.push('*Message :* ' + message); }
       lines.push('');
       lines.push('Merci !');
 
-      var waMessage = lines.join('\n');
-      var waUrl = 'https://wa.me/590690000000?text=' + encodeWA(waMessage);
+      var waUrl = 'https://wa.me/590690000000?text=' +
+        encodeURIComponent(lines.join('\n'));
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
   }
 
-  /* ---- MAILTO FORM ---- */
+  /* ------------------------------------------------------------------ */
+  /* MAILTO FORM                                                          */
+  /* ------------------------------------------------------------------ */
+
   var emailForm = document.getElementById('email-form');
   if (emailForm) {
     emailForm.addEventListener('submit', function (e) {
       e.preventDefault();
+      clearFormErrors(emailForm);
 
       var nom     = emailForm.querySelector('#em-nom').value.trim();
       var email   = emailForm.querySelector('#em-email').value.trim();
       var sujet   = emailForm.querySelector('#em-sujet').value.trim();
       var message = emailForm.querySelector('#em-message').value.trim();
 
+      /* Validation */
       if (!nom) {
         showFormError(emailForm, '#em-nom', 'Veuillez indiquer votre nom.');
         return;
       }
       if (!email || !isValidEmail(email)) {
-        showFormError(emailForm, '#em-email', 'Veuillez entrer une adresse email valide.');
+        showFormError(emailForm, '#em-email',
+          'Veuillez entrer une adresse email valide.');
         return;
       }
       if (!sujet) {
@@ -260,68 +323,22 @@
         return;
       }
 
-      clearFormErrors(emailForm);
+      var body = [
+        'Bonjour,',
+        '',
+        message,
+        '',
+        'Cordialement,',
+        nom
+      ].join('\n');
 
-      var body = [];
-      body.push('Bonjour,');
-      body.push('');
-      body.push(message);
-      body.push('');
-      body.push('Cordialement,');
-      body.push(nom);
-
-      var mailtoUrl = 'mailto:contact@labellecreole-guadeloupe.com'
-        + '?subject=' + encodeURIComponent('[La Belle Créole] ' + sujet)
-        + '&body=' + encodeURIComponent(body.join('\n'));
+      var mailtoUrl =
+        'mailto:contact@labellecreole-guadeloupe.com' +
+        '?subject=' + encodeURIComponent('[La Belle Créole] ' + sujet) +
+        '&body='    + encodeURIComponent(body);
 
       window.location.href = mailtoUrl;
     });
-  }
-
-  /* ---- FORM HELPERS ---- */
-
-  /**
-   * @param {HTMLFormElement} form
-   * @param {string} fieldSelector
-   * @param {string} message
-   */
-  function showFormError(form, fieldSelector, message) {
-    clearFormErrors(form);
-    var field = form.querySelector(fieldSelector);
-    if (!field) return;
-    field.setAttribute('aria-invalid', 'true');
-    field.style.borderColor = 'var(--hibiscus)';
-    field.style.boxShadow = '0 0 0 3px rgba(194,59,90,0.15)';
-
-    var errorEl = document.createElement('p');
-    errorEl.className = 'form-error';
-    errorEl.setAttribute('role', 'alert');
-    errorEl.style.cssText = 'color:var(--hibiscus);font-size:0.78rem;margin-top:0.3rem;font-family:var(--font-sans);';
-    errorEl.textContent = message;
-    field.parentNode.appendChild(errorEl);
-    field.focus();
-  }
-
-  /**
-   * @param {HTMLFormElement} form
-   */
-  function clearFormErrors(form) {
-    form.querySelectorAll('[aria-invalid]').forEach(function (el) {
-      el.removeAttribute('aria-invalid');
-      el.style.borderColor = '';
-      el.style.boxShadow = '';
-    });
-    form.querySelectorAll('.form-error').forEach(function (el) {
-      el.remove();
-    });
-  }
-
-  /**
-   * @param {string} email
-   * @returns {boolean}
-   */
-  function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
 })();
