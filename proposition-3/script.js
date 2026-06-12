@@ -1,17 +1,19 @@
 /* ============================================================
    La Belle Créole — Proposition 3 · Storytelling immersif
-   script.js
+   script.js — Vanilla JS, no dependencies
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ------------------------------------------------------------------ */
-  /* UTILS                                                                */
-  /* ------------------------------------------------------------------ */
+  /* ---- CONSTANTS ---- */
+  var WHATSAPP_NUMBER = '590690000000';
+  var CONTACT_EMAIL   = 'contact@labellecreole-guadeloupe.com';
+
+  /* ---- UTILS ---- */
 
   /**
-   * Format a YYYY-MM-DD date string to a readable French date.
+   * Format a date string (YYYY-MM-DD) to a French human-readable date.
    * @param {string} dateStr
    * @returns {string}
    */
@@ -27,7 +29,7 @@
   }
 
   /**
-   * Validate an email address.
+   * Basic email validation.
    * @param {string} email
    * @returns {boolean}
    */
@@ -36,49 +38,51 @@
   }
 
   /**
-   * Display an inline validation error beneath a field.
-   * @param {HTMLFormElement} form
-   * @param {string} fieldSelector
+   * Get trimmed value of an element by id.
+   * @param {string} id
+   * @returns {string}
+   */
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  /* ---- FORM ERROR HELPERS ---- */
+
+  /**
+   * Show a validation error under a form field.
+   * @param {HTMLElement} field
    * @param {string} message
    */
-  function showFormError(form, fieldSelector, message) {
-    clearFormErrors(form);
-    var field = form.querySelector(fieldSelector);
+  function showFieldError(field, message) {
     if (!field) return;
     field.setAttribute('aria-invalid', 'true');
-    field.style.borderColor = 'var(--hibiscus)';
-    field.style.boxShadow   = '0 0 0 3px rgba(194,59,90,0.14)';
-    var errorEl = document.createElement('p');
-    errorEl.className = 'form-error';
-    errorEl.setAttribute('role', 'alert');
-    errorEl.setAttribute('aria-live', 'polite');
-    errorEl.style.cssText =
-      'color:var(--hibiscus);font-size:0.78rem;margin-top:0.3rem;' +
-      'font-family:var(--font-sans);font-weight:300;';
-    errorEl.textContent = message;
-    field.parentNode.appendChild(errorEl);
+    var prev = field.parentNode.querySelector('.form__error');
+    if (prev) prev.remove();
+    var err = document.createElement('span');
+    err.className = 'form__error';
+    err.setAttribute('role', 'alert');
+    err.textContent = message;
+    field.parentNode.appendChild(err);
     field.focus();
   }
 
   /**
-   * Remove all validation error states from a form.
+   * Clear all validation errors from a form.
    * @param {HTMLFormElement} form
    */
-  function clearFormErrors(form) {
+  function clearErrors(form) {
     form.querySelectorAll('[aria-invalid]').forEach(function (el) {
       el.removeAttribute('aria-invalid');
-      el.style.borderColor = '';
-      el.style.boxShadow   = '';
     });
-    form.querySelectorAll('.form-error').forEach(function (el) {
+    form.querySelectorAll('.form__error').forEach(function (el) {
       el.remove();
     });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* NAV SCROLL SHADOW                                                    */
-  /* ------------------------------------------------------------------ */
-
+  /* ============================================================
+     NAV SCROLL STATE
+     ============================================================ */
   var nav = document.getElementById('site-nav');
   if (nav) {
     window.addEventListener('scroll', function () {
@@ -86,73 +90,80 @@
     }, { passive: true });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* BURGER MENU                                                          */
-  /* ------------------------------------------------------------------ */
+  /* ============================================================
+     BURGER MENU — mobile toggle
+     ============================================================ */
+  var burgerBtn = document.getElementById('burgerBtn');
+  var navLinks  = document.getElementById('navLinks');
 
-  var burger   = document.getElementById('burger');
-  var navLinks = document.getElementById('nav-links');
-
-  function closeMobileMenu() {
-    if (!navLinks || !burger) return;
-    navLinks.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-    burger.setAttribute('aria-label', 'Ouvrir le menu');
-    document.body.style.overflow = '';
-  }
-
-  if (burger && navLinks) {
-    burger.addEventListener('click', function () {
-      var isOpen = navLinks.classList.toggle('open');
-      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      burger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+  if (burgerBtn && navLinks) {
+    burgerBtn.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('is-open');
+      burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      burgerBtn.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
+    // Close on nav link click
     navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMobileMenu);
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('is-open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Ouvrir le menu');
+        document.body.style.overflow = '';
+      });
     });
 
+    // Close on outside click
     document.addEventListener('click', function (e) {
-      if (nav && !nav.contains(e.target) && navLinks.classList.contains('open')) {
-        closeMobileMenu();
+      if (nav && !nav.contains(e.target) && navLinks.classList.contains('is-open')) {
+        navLinks.classList.remove('is-open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Ouvrir le menu');
+        document.body.style.overflow = '';
       }
     });
 
+    // Close on Escape key
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-        closeMobileMenu();
-        if (burger) burger.focus();
+      if (e.key === 'Escape' && navLinks.classList.contains('is-open')) {
+        navLinks.classList.remove('is-open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        burgerBtn.setAttribute('aria-label', 'Ouvrir le menu');
+        document.body.style.overflow = '';
+        burgerBtn.focus();
       }
     });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* SMOOTH SCROLL — all anchor links                                     */
-  /* ------------------------------------------------------------------ */
-
+  /* ============================================================
+     SMOOTH SCROLL for anchor links
+     ============================================================ */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       var targetId = this.getAttribute('href').slice(1);
       if (!targetId) return;
       var target = document.getElementById(targetId);
-      if (!target) return;
-      e.preventDefault();
-      var navHeight = nav ? nav.offsetHeight : 72;
-      var top = target.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+      if (target) {
+        e.preventDefault();
+        var navHeight = nav ? nav.offsetHeight : 72;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
     });
   });
 
-  /* ------------------------------------------------------------------ */
-  /* INTERSECTION OBSERVER — .reveal → .visible                          */
-  /* ------------------------------------------------------------------ */
+  /* ============================================================
+     INTERSECTION OBSERVER — .reveal elements
+     Fade + translateY animation. Respects prefers-reduced-motion.
+     ============================================================ */
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if ('IntersectionObserver' in window) {
+  if (!prefersReducedMotion && 'IntersectionObserver' in window) {
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add('is-visible');
           revealObserver.unobserve(entry.target);
         }
       });
@@ -165,163 +176,179 @@
       revealObserver.observe(el);
     });
   } else {
-    /* Fallback: immediately show all elements */
+    // Reduced motion or no IntersectionObserver: show everything immediately
     document.querySelectorAll('.reveal').forEach(function (el) {
-      el.classList.add('visible');
+      el.classList.add('is-visible');
     });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* INTERSECTION OBSERVER — dynamic --current-accent per section        */
-  /* ------------------------------------------------------------------ */
-
+  /* ============================================================
+     INTERSECTION OBSERVER — scroll-driven accent color
+     Updates --current-accent on body when a section becomes >50% visible.
+     The sticky nav CTA button background transitions with this value.
+     ============================================================ */
   if ('IntersectionObserver' in window) {
     var accentObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          var rawAccent = entry.target.getAttribute('data-accent');
-          if (rawAccent) {
-            /* rawAccent is e.g. "--hibiscus" → set as var(--hibiscus) */
-            document.documentElement.style.setProperty(
-              '--current-accent',
-              'var(' + rawAccent + ')'
-            );
+          var color = entry.target.getAttribute('data-section-color');
+          if (color) {
+            document.body.style.setProperty('--current-accent', color);
           }
         }
       });
     }, {
-      threshold: 0.3
+      threshold: 0.5
     });
 
-    document.querySelectorAll('[data-accent]').forEach(function (section) {
+    document.querySelectorAll('[data-section-color]').forEach(function (section) {
       accentObserver.observe(section);
     });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* CHAPTER CTA BUTTONS — pre-fill logement + scroll to #contact        */
-  /* ------------------------------------------------------------------ */
-
-  document.querySelectorAll('.chapter-cta[data-logement]').forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      /* The anchor href="#contact" is handled by smooth-scroll above.
-         Additionally, pre-fill the WhatsApp form select. */
+  /* ============================================================
+     "DEMANDER À RÉSERVER" card buttons
+     Pre-fills the logement dropdown, scrolls to the reservation form.
+     ============================================================ */
+  document.querySelectorAll('.js-reserve').forEach(function (btn) {
+    btn.addEventListener('click', function () {
       var logement = this.getAttribute('data-logement');
-      if (!logement) return;
-
       var waSelect = document.getElementById('wa-logement');
-      if (waSelect) {
-        var matchingOption = waSelect.querySelector(
-          'option[value="' + logement + '"]'
-        );
-        if (matchingOption) {
-          waSelect.value = logement;
-          waSelect.dispatchEvent(new Event('change', { bubbles: true }));
+
+      // Pre-fill dropdown
+      if (waSelect && logement) {
+        var matched = false;
+        Array.prototype.forEach.call(waSelect.options, function (opt) {
+          if (opt.value === logement) {
+            waSelect.value = logement;
+            matched = true;
+          }
+        });
+        if (!matched) {
+          // Fallback: partial match
+          Array.prototype.forEach.call(waSelect.options, function (opt) {
+            if (opt.value.toLowerCase().indexOf(logement.toLowerCase()) !== -1) {
+              waSelect.value = opt.value;
+            }
+          });
         }
       }
 
-      /* Delay focus on select until after scroll animation */
-      if (waSelect) {
-        setTimeout(function () { waSelect.focus(); }, 800);
+      // Scroll to reservation section
+      var reservationSection = document.getElementById('reservation');
+      if (reservationSection) {
+        var navHeight = nav ? nav.offsetHeight : 72;
+        var top = reservationSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        if (waSelect) {
+          setTimeout(function () { waSelect.focus(); }, 700);
+        }
       }
     });
   });
 
-  /* ------------------------------------------------------------------ */
-  /* WHATSAPP FORM                                                        */
-  /* ------------------------------------------------------------------ */
-
-  var waForm = document.getElementById('whatsapp-form');
+  /* ============================================================
+     WHATSAPP FORM — builds wa.me link with pre-filled message
+     ============================================================ */
+  var waForm = document.getElementById('waForm');
   if (waForm) {
     waForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      clearFormErrors(waForm);
+      clearErrors(waForm);
 
-      var logement = waForm.querySelector('#wa-logement').value.trim();
-      var arrivee  = waForm.querySelector('#wa-arrivee').value;
-      var depart   = waForm.querySelector('#wa-depart').value;
-      var nom      = waForm.querySelector('#wa-nom').value.trim();
-      var tel      = waForm.querySelector('#wa-tel').value.trim();
-      var message  = waForm.querySelector('#wa-message').value.trim();
+      var prenom    = val('wa-prenom');
+      var nom       = val('wa-nom');
+      var tel       = val('wa-tel');
+      var logement  = val('wa-logement');
+      var arrivee   = val('wa-arrivee');
+      var depart    = val('wa-depart');
+      var personnes = val('wa-personnes');
+      var message   = val('wa-message');
 
-      /* Validation */
-      if (!logement) {
-        showFormError(waForm, '#wa-logement', 'Veuillez sélectionner un logement.');
-        return;
+      // Validation
+      var ok = true;
+      if (!prenom) {
+        showFieldError(document.getElementById('wa-prenom'), 'Veuillez indiquer votre prénom.');
+        ok = false;
       }
-      if (!arrivee) {
-        showFormError(waForm, '#wa-arrivee', "Veuillez indiquer la date d'arrivée.");
-        return;
+      if (ok && !nom) {
+        showFieldError(document.getElementById('wa-nom'), 'Veuillez indiquer votre nom.');
+        ok = false;
       }
-      if (!depart) {
-        showFormError(waForm, '#wa-depart', 'Veuillez indiquer la date de départ.');
-        return;
+      if (ok && !tel) {
+        showFieldError(document.getElementById('wa-tel'), 'Veuillez indiquer votre numéro de téléphone.');
+        ok = false;
       }
-      if (new Date(depart) <= new Date(arrivee)) {
-        showFormError(waForm, '#wa-depart',
-          "La date de départ doit être postérieure à la date d'arrivée.");
-        return;
+      if (ok && !arrivee) {
+        showFieldError(document.getElementById('wa-arrivee'), "Veuillez sélectionner une date d'arrivée.");
+        ok = false;
       }
-      if (!nom) {
-        showFormError(waForm, '#wa-nom', 'Veuillez indiquer votre nom.');
-        return;
+      if (ok && !depart) {
+        showFieldError(document.getElementById('wa-depart'), 'Veuillez sélectionner une date de départ.');
+        ok = false;
       }
+      if (ok && arrivee && depart && new Date(depart) <= new Date(arrivee)) {
+        showFieldError(document.getElementById('wa-depart'), "La date de départ doit être après la date d'arrivée.");
+        ok = false;
+      }
+      if (ok && !personnes) {
+        showFieldError(document.getElementById('wa-personnes'), 'Veuillez indiquer le nombre de personnes.');
+        ok = false;
+      }
+      if (!ok) return;
 
-      /* Build WhatsApp message */
+      // Build pre-filled WhatsApp message
       var lines = [
         'Bonjour,',
         '',
-        'Je souhaite faire une demande de réservation pour *La Belle Créole*.',
+        'Je souhaite faire une demande de réservation pour *La Belle Créole* à Sainte-Anne, Guadeloupe.',
         '',
-        '*Logement :* ' + logement,
-        "*Arrivée :* "  + formatDate(arrivee),
-        '*Départ :* '   + formatDate(depart),
-        '*Nom :* '      + nom
+        '*Logement souhaité :* ' + logement,
+        '*Arrivée :* '            + formatDate(arrivee),
+        '*Départ :* '             + formatDate(depart),
+        '*Nombre de personnes :* '+ personnes,
+        '*Nom :* '                + prenom + ' ' + nom,
+        '*Téléphone :* '          + tel
       ];
-      if (tel)     lines.push('*Téléphone :* ' + tel);
-      if (message) { lines.push(''); lines.push('*Message :* ' + message); }
+      if (message) {
+        lines.push('');
+        lines.push('*Message :* ' + message);
+      }
       lines.push('');
       lines.push('Merci !');
 
-      var waUrl = 'https://wa.me/590690000000?text=' +
-        encodeURIComponent(lines.join('\n'));
+      var waUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
       window.open(waUrl, '_blank', 'noopener,noreferrer');
     });
   }
 
-  /* ------------------------------------------------------------------ */
-  /* MAILTO FORM                                                          */
-  /* ------------------------------------------------------------------ */
-
-  var emailForm = document.getElementById('email-form');
+  /* ============================================================
+     MAILTO / EMAIL FORM
+     ============================================================ */
+  var emailForm = document.getElementById('emailForm');
   if (emailForm) {
     emailForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      clearFormErrors(emailForm);
+      clearErrors(emailForm);
 
-      var nom     = emailForm.querySelector('#em-nom').value.trim();
-      var email   = emailForm.querySelector('#em-email').value.trim();
-      var sujet   = emailForm.querySelector('#em-sujet').value.trim();
-      var message = emailForm.querySelector('#em-message').value.trim();
+      var nom     = val('em-nom');
+      var email   = val('em-email');
+      var message = val('em-message');
 
-      /* Validation */
+      var ok = true;
       if (!nom) {
-        showFormError(emailForm, '#em-nom', 'Veuillez indiquer votre nom.');
-        return;
+        showFieldError(document.getElementById('em-nom'), 'Veuillez indiquer votre nom.');
+        ok = false;
       }
-      if (!email || !isValidEmail(email)) {
-        showFormError(emailForm, '#em-email',
-          'Veuillez entrer une adresse email valide.');
-        return;
+      if (ok && (!email || !isValidEmail(email))) {
+        showFieldError(document.getElementById('em-email'), 'Veuillez entrer une adresse email valide.');
+        ok = false;
       }
-      if (!sujet) {
-        showFormError(emailForm, '#em-sujet', 'Veuillez indiquer un sujet.');
-        return;
+      if (ok && !message) {
+        showFieldError(document.getElementById('em-message'), 'Veuillez écrire votre message.');
+        ok = false;
       }
-      if (!message) {
-        showFormError(emailForm, '#em-message', 'Veuillez écrire votre message.');
-        return;
-      }
+      if (!ok) return;
 
       var body = [
         'Bonjour,',
@@ -332,10 +359,9 @@
         nom
       ].join('\n');
 
-      var mailtoUrl =
-        'mailto:contact@labellecreole-guadeloupe.com' +
-        '?subject=' + encodeURIComponent('[La Belle Créole] ' + sujet) +
-        '&body='    + encodeURIComponent(body);
+      var mailtoUrl = 'mailto:' + CONTACT_EMAIL
+        + '?subject=' + encodeURIComponent('[La Belle Créole] Message de ' + nom)
+        + '&body='    + encodeURIComponent(body);
 
       window.location.href = mailtoUrl;
     });
