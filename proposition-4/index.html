@@ -90,7 +90,7 @@
   #card-hibiscus .kind { color: #F9E9D8; }
   #card-hibiscus a { color: var(--coconut); border-color: rgba(253,249,242,0.6); }
   .photoThumb { width: 220px; height: 130px; border-radius: 4px; overflow: hidden; box-shadow: 0 14px 34px rgba(0,0,0,0.25); }
-  #card-croton { grid-column: span 2; min-height: 270px; background: linear-gradient(150deg,#E8D44D,#2C7A3A 60%,#C0392B); transform: rotate(0.8deg); }
+  #card-croton { grid-column: span 2; min-height: 270px; background: linear-gradient(150deg,#E8D44D,#2C7A3A 60%,#C0392B); transform: rotate(0.8deg); position: relative; overflow: hidden; }
   #card-isora { grid-column: span 2; min-height: 270px; background: linear-gradient(150deg,#F0A06A,#E05C45 65%,#8B1A2F); transform: rotate(-0.4deg); }
   #card-jasmin { grid-column: span 3; min-height: 280px; background: linear-gradient(150deg,#FDF9F2,#F9F6F0 60%,#D4A84B); transform: rotate(0.5deg); }
   #card-alamanda { grid-column: span 3; min-height: 280px; background: linear-gradient(150deg,#F4CF2F,#2A6B3A 75%); transform: rotate(-0.7deg); }
@@ -245,7 +245,8 @@
       </div>
     </div>
     <div id="card-croton" class="flowerCard">
-      <div class="inner">
+      <img src="../photos/web/croton-terrasse.jpg" alt="Appartement Croton — terrasse" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:inherit">
+      <div class="inner" style="position:relative;z-index:1;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);border-radius:inherit">
         <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
         <div>
           <h3>Croton</h3>
