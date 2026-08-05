@@ -415,10 +415,9 @@
 </footer>
 
 <script>
-  // Config éditoriale
   const SHOW_PRICES = true;
   const DEFAULT_FLOWER = 'hibiscus';
-  const WHATSAPP_PHONE = '590690000000'; // à remplacer par le vrai numéro
+  const WHATSAPP_PHONE = '590690000000';
 
   const FLOWERS = [
     { id: 'hibiscus', name: 'Villa Hibiscus', dot: '#E8732A' },
@@ -430,13 +429,11 @@
 
   if (!SHOW_PRICES) document.querySelectorAll('.priceTag').forEach(el => el.style.display = 'none');
 
-  // Nav scroll state
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
-  // Falling petals
   const petalColors = ['#E8732A', '#F0A06A', '#F2C46A'];
   const petalsWrap = document.getElementById('petals');
   for (let i = 0; i < 10; i++) {
@@ -452,7 +449,6 @@
     petalsWrap.appendChild(p);
   }
 
-  // Booking form
   let selectedFlower = DEFAULT_FLOWER;
   let guests = 2;
   const flowerOptionsEl = document.getElementById('flowerOptions');
