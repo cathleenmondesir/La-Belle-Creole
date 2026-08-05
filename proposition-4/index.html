@@ -6,4 +6,486 @@
 <title>La Belle Créole — Gîte familial, Sainte-Anne, Guadeloupe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>see file</style></head>
+<style>
+  :root {
+    --orange: #E8732A; --coral: #F0A06A; --carmine: #8B1A2F; --gold: #F2C46A;
+    --sand: #F7EDD8; --coconut: #FDF9F2; --night: #1A3D2B; --stone: #5C4A38;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--sand); font-family: 'Jost', sans-serif; color: var(--stone); overflow-x: hidden; }
+  a { color: var(--orange); text-decoration: none; }
+  a:hover { color: var(--carmine); }
+  ::selection { background: var(--orange); color: var(--coconut); }
+  .placeholder {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    background: repeating-linear-gradient(135deg, #00000010, #00000010 10px, #ffffff08 10px, #ffffff08 20px), #cbb99a55;
+    color: var(--stone); font-family: monospace; font-size: 12px; text-align: center; padding: 12px;
+  }
+  @keyframes floatSlow { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-14px,18px); } }
+  @keyframes floatSlow2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(16px,-14px); } }
+  @keyframes petalDrift { 0% { transform: translateY(-6vh) rotate(0deg); opacity:0; } 10% { opacity:.55; } 90% { opacity:.4; } 100% { transform: translateY(106vh) rotate(140deg); opacity:0; } }
+
+  nav { position: sticky; top: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center;
+    padding: 26px 6vw; background: transparent; transition: all .35s ease; }
+  nav.scrolled { padding: 14px 6vw; background: rgba(253,249,242,0.92); backdrop-filter: blur(14px); box-shadow: 0 2px 24px rgba(92,74,56,0.08); }
+  #navScrim { position: absolute; inset: 0; pointer-events: none; z-index: -1; opacity: 1; transition: opacity .35s ease;
+    background: linear-gradient(180deg, rgba(26,61,43,.55), rgba(26,61,43,.15) 70%, transparent); }
+  nav.scrolled #navScrim { opacity: 0; }
+  .navLink { font-size: 13px; letter-spacing: 0.06em; color: var(--coconut); }
+  nav.scrolled .navLink { color: var(--stone); }
+  .navLogoText { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--coconut); }
+  nav.scrolled .navLogoText { color: var(--stone); }
+  .navBtn { background: var(--orange); color: var(--coconut); padding: 11px 26px; border-radius: 100px; font-size: 13px; letter-spacing: 0.04em; }
+  .navBtn:hover { background: var(--carmine); }
+
+  .hero { position: relative; height: 100vh; min-height: 680px; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 20% 15%, rgba(242,196,106,0.55), transparent 60%),
+                radial-gradient(ellipse 70% 60% at 85% 20%, rgba(232,115,42,0.4), transparent 60%),
+                radial-gradient(ellipse 90% 70% at 50% 100%, rgba(26,61,43,0.5), transparent 65%),
+                linear-gradient(180deg, var(--night) 0%, #2b5942 55%, var(--sand) 100%); }
+  .heroGlowA { position: absolute; top: -8%; left: -6%; width: 46vw; height: 46vw; max-width: 640px; max-height: 640px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,115,42,0.5), transparent 70%); filter: blur(6px); animation: floatSlow 16s ease-in-out infinite; }
+  .heroGlowB { position: absolute; bottom: -14%; right: -8%; width: 50vw; height: 50vw; max-width: 700px; max-height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,196,106,0.4), transparent 70%); filter: blur(4px); animation: floatSlow2 20s ease-in-out infinite; }
+  .petal { position: absolute; top: -8vh; border-radius: 50% 0 50% 50%; opacity: 0.5; animation: petalDrift linear infinite; }
+  .heroContent { position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 920px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.28em; color: var(--gold); margin-bottom: 22px; }
+  .heroContent h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px,7vw,96px); line-height: 1.04; color: var(--coconut); margin: 0 0 26px; }
+  .heroContent h1 em { font-style: italic; color: var(--coral); }
+  .heroSub { font-size: 19px; line-height: 1.6; color: var(--coconut); opacity: .88; font-weight: 300; max-width: 560px; margin: 0 auto 44px; }
+  .ctaRow { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .btnPrimary { background: var(--orange); color: var(--coconut); padding: 16px 34px; border-radius: 100px; font-size: 14px; letter-spacing: 0.05em; display: inline-block; }
+  .btnPrimary:hover { background: var(--coral); }
+  .btnGhost { background: transparent; border: 1px solid rgba(253,249,242,0.5); color: var(--coconut); padding: 16px 34px; border-radius: 100px; font-size: 14px; letter-spacing: 0.05em; display: inline-block; }
+  .btnGhost:hover { border-color: var(--coconut); background: rgba(253,249,242,0.08); }
+  .heroWidget { position: absolute; right: 32px; bottom: 32px; z-index: 3; background: rgba(253,249,242,0.16); backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(253,249,242,0.35); border-radius: 20px; padding: 22px 24px; width: 260px;
+    box-shadow: 0 20px 50px rgba(26,61,43,0.35); }
+  .heroWidget .label { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 8px; }
+  .heroWidget .title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--coconut); margin-bottom: 14px; }
+  .heroWidget a { display: block; text-align: center; background: var(--coconut); color: var(--night); padding: 12px; border-radius: 12px; font-size: 13px; letter-spacing: 0.03em; }
+  .heroWidget a:hover { background: var(--gold); }
+
+  section { }
+  .sectionHead { text-align: center; margin-bottom: 70px; }
+  .sectionHead .eyebrow { color: var(--orange); }
+  .sectionHead h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px,5vw,64px); margin: 0 0 22px; color: var(--stone); }
+  .sectionHead h2 em { font-style: italic; color: var(--orange); }
+  .sectionHead p { font-size: 17px; font-weight: 300; max-width: 560px; margin: 0 auto; line-height: 1.7; opacity: .85; }
+
+  #logements { padding: 140px 6vw 100px; max-width: 1440px; margin: 0 auto; }
+  .flowerGrid { display: grid; grid-template-columns: repeat(6,1fr); grid-template-rows: auto auto; gap: 22px; }
+  .flowerCard { position: relative; border-radius: 6px; overflow: hidden; }
+  .flowerCard .inner { position: absolute; inset: 0; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; }
+  .flowerCard h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; margin: 0 0 8px; }
+  .flowerCard p { font-weight: 300; margin: 0 0 12px; }
+  .flowerCard .kind { font-size: 10px; letter-spacing: 0.16em; }
+  .flowerCard a { font-size: 12px; border-bottom: 1px solid; padding-bottom: 1px; }
+  #card-hibiscus { grid-column: span 4; grid-row: span 2; min-height: 560px; background: linear-gradient(160deg,#F0A06A,#E8732A 55%,#8B1A2F); transform: rotate(-0.6deg); transition: transform .5s ease; }
+  #card-hibiscus:hover { transform: rotate(0deg) scale(1.01); }
+  #card-hibiscus .inner { padding: 40px; }
+  #card-hibiscus h3 { font-size: 56px; color: var(--coconut); }
+  #card-hibiscus p { font-size: 16px; line-height: 1.7; color: var(--coconut); opacity: .92; max-width: 520px; }
+  #card-hibiscus .kind { color: #F9E9D8; }
+  #card-hibiscus a { color: var(--coconut); border-color: rgba(253,249,242,0.6); }
+  .photoThumb { width: 220px; height: 130px; border-radius: 4px; overflow: hidden; box-shadow: 0 14px 34px rgba(0,0,0,0.25); }
+  #card-croton { grid-column: span 2; min-height: 270px; background: linear-gradient(150deg,#E8D44D,#2C7A3A 60%,#C0392B); transform: rotate(0.8deg); }
+  #card-isora { grid-column: span 2; min-height: 270px; background: linear-gradient(150deg,#F0A06A,#E05C45 65%,#8B1A2F); transform: rotate(-0.4deg); }
+  #card-jasmin { grid-column: span 3; min-height: 280px; background: linear-gradient(150deg,#FDF9F2,#F9F6F0 60%,#D4A84B); transform: rotate(0.5deg); }
+  #card-alamanda { grid-column: span 3; min-height: 280px; background: linear-gradient(150deg,#F4CF2F,#2A6B3A 75%); transform: rotate(-0.7deg); }
+  #card-croton .kind, #card-croton h3, #card-croton p, #card-isora .kind, #card-isora h3, #card-isora p,
+  #card-alamanda .kind, #card-alamanda h3, #card-alamanda p { color: var(--coconut); }
+  #card-croton p, #card-isora p, #card-alamanda p { opacity: .9; }
+  #card-croton a, #card-isora a, #card-alamanda a { color: var(--coconut); border-color: rgba(253,249,242,0.55); }
+  #card-jasmin .kind { color: #8B7355; }
+  #card-jasmin h3 { color: var(--stone); font-size: 34px; }
+  #card-jasmin p { color: var(--stone); opacity: .85; }
+  #card-jasmin a { color: var(--carmine); border-color: rgba(139,26,47,0.4); }
+  #card-croton h3, #card-isora h3, #card-alamanda h3 { font-size: 32px; }
+  #card-alamanda h3 { font-size: 34px; }
+  .cardMeta { display: flex; align-items: center; gap: 24px; font-size: 13px; }
+
+  #jardin { padding: 90px 6vw; background: var(--coconut); }
+  .jardinGrid { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; align-items: center; }
+  .jardinPhoto { position: relative; height: 520px; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 70px rgba(26,61,43,0.18); }
+  .jardinGlow { position: absolute; top: 22px; left: -40px; width: 130px; height: 130px; border-radius: 50%; background: radial-gradient(circle, rgba(232,115,42,0.35), transparent 70%); pointer-events: none; }
+  .jardinGrid h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px,4vw,50px); margin: 0 0 26px; }
+  .jardinGrid h2 em { font-style: italic; color: var(--orange); }
+  .jardinGrid p { font-size: 16.5px; line-height: 1.85; font-weight: 300; opacity: .88; margin: 0 0 18px; }
+
+  #histoire { padding: 130px 6vw; background: var(--night); position: relative; overflow: hidden; }
+  .histoireGlow { position: absolute; top: -10%; right: -6%; width: 40vw; height: 40vw; max-width: 520px; max-height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(232,115,42,0.18), transparent 70%); }
+  .histoireInner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .histoireQuote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(30px,4vw,46px); color: var(--coconut); text-align: center; line-height: 1.5; max-width: 820px; margin: 0 auto 90px; }
+  .histoireGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; margin-bottom: 64px; }
+  .histoireGrid p { font-size: 16.5px; line-height: 1.9; font-weight: 300; color: var(--coconut); opacity: .88; margin: 0 0 20px; }
+  .histoirePhoto { height: 380px; border-radius: 6px; overflow: hidden; }
+  .chips { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .chip { border: 1px solid rgba(253,249,242,0.3); border-radius: 100px; padding: 10px 22px; font-size: 13px; letter-spacing: 0.03em; color: #F9F6F0; }
+
+  #experience { padding: 110px 0; background: #171717; }
+  .expHead { padding: 0 6vw; margin-bottom: 56px; }
+  .expHead h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px,4.2vw,52px); margin: 0; color: var(--coconut); }
+  .expHead h2 em { font-style: italic; color: var(--orange); }
+  .expRow { display: flex; gap: 2px; overflow-x: auto; padding: 0 6vw 12px; }
+  .expCard { flex: 0 0 340px; height: 420px; background: #000; padding: 34px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .expCard .word { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 44px; color: var(--orange); margin-bottom: 16px; line-height: 1.1; }
+  .expCard .text { font-size: 15px; line-height: 1.6; color: var(--coconut); opacity: .82; font-weight: 300; }
+
+  #disponibilites { padding: 130px 6vw; background: var(--sand); }
+  .bookWrap { max-width: 760px; margin: 0 auto; }
+  .bookCard { background: var(--coconut); border-radius: 10px; padding: 44px; box-shadow: 0 30px 70px rgba(92,74,56,0.1); }
+  .fieldLabel { display: block; font-size: 11px; letter-spacing: 0.08em; opacity: .7; margin-bottom: 8px; }
+  .flowerOpt { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 100px; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 13.5px; border: 1px solid rgba(92,74,56,0.2); background: transparent; color: var(--stone); }
+  .flowerOpt .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .flowerOpt.active { border-color: var(--orange); background: rgba(232,115,42,0.1); }
+  .bookRow3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+  .bookRow3 input[type="date"] { width: 100%; padding: 13px 14px; border-radius: 8px; border: 1px solid rgba(92,74,56,0.2); background: var(--coconut); font-family: 'Jost', sans-serif; font-size: 14px; color: var(--stone); }
+  .guestStepper { display: flex; align-items: center; border: 1px solid rgba(92,74,56,0.2); border-radius: 8px; background: var(--coconut); padding: 6px 8px; justify-content: space-between; }
+  .guestStepper button { width: 30px; height: 30px; border-radius: 6px; border: none; background: var(--sand); color: var(--stone); font-size: 16px; cursor: pointer; }
+  .whatsappBtn { display: block; text-align: center; background: var(--orange); color: var(--coconut); padding: 17px; border-radius: 10px; font-size: 14px; letter-spacing: 0.04em; margin-bottom: 14px; }
+  .whatsappBtn:hover { background: var(--carmine); color: var(--coconut); }
+  .emailLink { display: block; text-align: center; color: var(--stone); font-size: 13px; opacity: .75; }
+
+  #avis { padding: 110px 0 130px; background: var(--coconut); }
+  .avisRow { display: flex; gap: 28px; overflow-x: auto; padding: 0 6vw 16px; }
+  .avisCard { flex: 0 0 380px; background: var(--sand); border-radius: 10px; padding: 36px; }
+  .avisCard .quoteMark { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: var(--orange); line-height: 1; margin-bottom: 14px; }
+  .avisCard p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; line-height: 1.6; margin: 0 0 22px; }
+  .avisCard .who { font-size: 13px; letter-spacing: 0.04em; opacity: .7; }
+
+  footer { background: var(--night); padding: 80px 6vw 40px; }
+  .footGrid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+  .footLogo { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--coconut); margin-bottom: 16px; }
+  .footGrid p { font-size: 14.5px; line-height: 1.75; color: var(--coconut); opacity: .7; font-weight: 300; max-width: 300px; }
+  .footCol .colLabel { font-size: 11px; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 18px; }
+  .footCol a { display: block; color: var(--coconut); opacity: .75; font-size: 14px; margin-bottom: 12px; }
+  .footCol a:hover { opacity: 1; }
+  .footBottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(253,249,242,0.15); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--coconut); }
+  .footBottom .legal { display: flex; gap: 20px; }
+  .footBottom .legal a { opacity: .5; }
+  .footBottom .legal a:hover { opacity: .9; }
+
+  @media (max-width: 900px) {
+    nav .navLinksDesktop { display: none; }
+    .flowerGrid { grid-template-columns: 1fr; }
+    #card-hibiscus, #card-croton, #card-isora, #card-jasmin, #card-alamanda { grid-column: span 1; grid-row: span 1; transform: none; }
+    .jardinGrid, .histoireGrid, .footGrid { grid-template-columns: 1fr; }
+    .bookRow3 { grid-template-columns: 1fr; }
+    .heroWidget { position: static; margin: 32px auto 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div id="navScrim"></div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg width="26" height="26" viewBox="0 0 26 26" style="flex:none">
+      <circle cx="13" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1" class="navLink"></circle>
+      <circle cx="13" cy="6" r="3.6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.75" class="navLink"></circle>
+      <circle cx="19.2" cy="10" r="3.6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.75" class="navLink"></circle>
+      <circle cx="19.2" cy="16.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.75" class="navLink"></circle>
+      <circle cx="6.8" cy="16.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1" opacity="0.75" class="navLink"></circle>
+    </svg>
+    <div class="navLogoText">La Belle <em style="font-style:italic;color:var(--orange)">Créole</em></div>
+  </div>
+  <div class="navLinksDesktop" style="display:flex;align-items:center;gap:36px">
+    <a class="navLink" href="#logements">LOGEMENTS</a>
+    <a class="navLink" href="#experience">EXPÉRIENCES</a>
+    <a class="navLink" href="#histoire">HISTOIRE</a>
+    <a class="navLink" href="#contact">CONTACT</a>
+    <a class="navBtn" href="#disponibilites">Réserver</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="heroGlowA"></div>
+  <div class="heroGlowB"></div>
+  <div id="petals"></div>
+  <div class="heroContent">
+    <div class="eyebrow">SAINTE-ANNE · GUADELOUPE</div>
+    <h1>Bienvenue à<br>La Belle <em>Créole</em></h1>
+    <p class="heroSub">Une famille guadeloupéenne vous ouvre ses portes depuis vingt ans.</p>
+    <div class="ctaRow">
+      <a class="btnPrimary" href="#logements">Voir les logements</a>
+      <a class="btnGhost" href="#histoire">Notre histoire</a>
+    </div>
+  </div>
+  <div class="heroWidget">
+    <div class="label">DISPONIBILITÉ</div>
+    <div class="title">Vérifier une date</div>
+    <a href="#disponibilites">Consulter le calendrier</a>
+  </div>
+</section>
+
+<section id="logements">
+  <div class="sectionHead">
+    <div class="eyebrow">LOGEMENTS</div>
+    <h2>Cinq fleurs, cinq <em>univers</em></h2>
+    <p>Nos parents ont planté ces fleurs il y a vingt ans. Aujourd'hui, elles donnent leur nom à vos chambres.</p>
+  </div>
+  <div class="flowerGrid">
+    <div id="card-hibiscus" class="flowerCard">
+      <div class="inner">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="kind">VILLA CRÉOLE · 2 CHAMBRES</div>
+          <div class="photoThumb"><img src="../photos/web/exterieur-vert.jpg" alt="Villa Hibiscus" style="width:100%;height:100%;object-fit:cover;object-position:center"></div>
+        </div>
+        <div>
+          <h3>Villa Hibiscus</h3>
+          <p>Le cœur historique de la propriété. Les volets s'ouvrent sur le jardin, l'hibiscus orange grimpe jusqu'à la terrasse. C'est ici que tout a commencé, il y a vingt ans.</p>
+          <div class="cardMeta">
+            <span>Jusqu'à 4 personnes</span>
+            <span class="priceTag" style="color:#F2C46A">À partir de 120€/nuit</span>
+            <a href="#disponibilites">Découvrir →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="card-croton" class="flowerCard">
+      <div class="inner">
+        <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
+        <div>
+          <h3>Croton</h3>
+          <p>Le feuillage sauvage et multicolore du jardin, jusque dans le salon.</p>
+          <a href="#disponibilites">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+    <div id="card-isora" class="flowerCard">
+      <div class="inner">
+        <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
+        <div>
+          <h3>Isora</h3>
+          <p>Intime, tournée vers le jardin. Les grappes corail de l'ixora à la fenêtre.</p>
+          <a href="#disponibilites">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+    <div id="card-jasmin" class="flowerCard">
+      <div class="inner">
+        <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
+        <div>
+          <h3>Jasmin</h3>
+          <p>Blanc, romantique. Le soir, son parfum entre par la fenêtre entrouverte.</p>
+          <a href="#disponibilites">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+    <div id="card-alamanda" class="flowerCard">
+      <div class="inner">
+        <div class="kind">APPARTEMENT · 1 CH + CANAPÉ-LIT</div>
+        <div>
+          <h3>Alamanda</h3>
+          <p>Compacte et lumineuse. La liane à lait jaune soleil grimpe au balcon.</p>
+          <a href="#disponibilites">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="jardin">
+  <div class="jardinGrid">
+    <div class="jardinPhoto">
+      <img src="../photos/web/piscine.jpg" alt="Piscine commune La Belle Créole" style="width:100%;height:100%;object-fit:cover;object-position:center top">
+      <div class="jardinGlow"></div>
+    </div>
+    <div>
+      <div class="eyebrow" style="color:var(--orange);margin-bottom:18px">LE JARDIN & LA PISCINE</div>
+      <h2>L'endroit où tout le monde<br><em>finit par se retrouver</em></h2>
+      <p>Entre les cinq logements, il y a un jardin. Des cocotiers plantés par notre père, des massifs d'hibiscus et de croton entretenus à la main, et une piscine où les enfants des uns retrouvent ceux des autres.</p>
+      <p style="margin-bottom:0">La piscine, c'est l'endroit où tout le monde finit par se retrouver — souvent avec un verre, parfois jusqu'à la nuit tombée.</p>
+    </div>
+  </div>
+</section>
+
+<section id="histoire">
+  <div class="histoireGlow"></div>
+  <div class="histoireInner">
+    <p class="histoireQuote">"Ici, on est chez nous.<br>Et vous y êtes les bienvenus."</p>
+    <div class="histoireGrid">
+      <div>
+        <div class="eyebrow" style="color:var(--gold);margin-bottom:18px">NOTRE HISTOIRE</div>
+        <p>Nous avons acheté ce terrain à Sainte-Anne il y a vingt ans, avec l'idée d'y planter un jardin et d'y recevoir. La villa est venue en premier, puis les appartements, un à un, à mesure que la famille grandissait.</p>
+        <p style="margin-bottom:0">Aujourd'hui, nos filles nous aident à l'accueil. On connaît nos hôtes par leur prénom, souvent avant même leur arrivée.</p>
+      </div>
+      <div class="histoirePhoto"><img src="../photos/web/terrasse-nuit.jpg" alt="Terrasse La Belle Créole" style="width:100%;height:100%;object-fit:cover;object-position:center"></div>
+    </div>
+    <div class="chips">
+      <div class="chip">Depuis 2005</div>
+      <div class="chip">Sainte-Anne</div>
+      <div class="chip">5 logements</div>
+      <div class="chip">Une famille</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="expHead">
+    <div class="eyebrow" style="color:var(--coral);margin-bottom:18px">L'EXPÉRIENCE</div>
+    <h2>Ce qu'on ne met pas <em>en photo</em></h2>
+  </div>
+  <div class="expRow">
+    <div class="expCard"><div class="word">Le jasmin</div><div class="text">Le soir, son parfum entre par la fenêtre entrouverte de l'appartement du même nom.</div></div>
+    <div class="expCard"><div class="word">Le vent</div><div class="text">Dans les cocotiers plantés par notre père, il y a vingt ans.</div></div>
+    <div class="expCard"><div class="word">Le turquoise</div><div class="text">L'eau des plages de Sainte-Anne, à dix minutes à pied.</div></div>
+    <div class="expCard"><div class="word">Le petit-déjeuner</div><div class="text">Fruits du jardin, pain frais et confiture maison, servis sur la terrasse.</div></div>
+    <div class="expCard"><div class="word">Les étoiles</div><div class="text">La terrasse, le soir, quand la chaleur retombe enfin.</div></div>
+  </div>
+</section>
+
+<section id="disponibilites">
+  <div class="bookWrap">
+    <div class="sectionHead" style="margin-bottom:56px">
+      <div class="eyebrow">DISPONIBILITÉS</div>
+      <h2>Réserver <em>votre séjour</em></h2>
+      <p style="opacity:.75">Réponse sous 24h · Réservation sans commission de plateforme</p>
+    </div>
+    <div class="bookCard">
+      <div style="margin-bottom:28px">
+        <div class="fieldLabel" style="margin-bottom:14px">CHOISISSEZ VOTRE LOGEMENT</div>
+        <div id="flowerOptions" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+      </div>
+      <div class="bookRow3">
+        <div>
+          <label class="fieldLabel">ARRIVÉE</label>
+          <input type="date" id="arrival">
+        </div>
+        <div>
+          <label class="fieldLabel">DÉPART</label>
+          <input type="date" id="departure">
+        </div>
+        <div>
+          <label class="fieldLabel">VOYAGEURS</label>
+          <div class="guestStepper">
+            <button id="decGuests" type="button">−</button>
+            <span id="guestCount">2</span>
+            <button id="incGuests" type="button">+</button>
+          </div>
+        </div>
+      </div>
+      <a id="whatsappBtn" class="whatsappBtn" target="_blank" rel="noopener" href="#">Vérifier la disponibilité sur WhatsApp</a>
+      <a class="emailLink" href="mailto:contact@labellecreole-guadeloupe.com?subject=Demande de disponibilité">ou écrire directement par email</a>
+    </div>
+  </div>
+</section>
+
+<section id="avis">
+  <div class="sectionHead" style="margin-bottom:56px">
+    <div class="eyebrow">ILS SONT VENUS</div>
+    <h2>Ce qu'ils en <em>disent</em></h2>
+  </div>
+  <div class="avisRow">
+    <div class="avisCard"><div class="quoteMark">"</div><p>On s'est sentis chez nous dès le premier soir. La famille est d'une gentillesse rare.</p><div class="who">Claire M. · France</div></div>
+    <div class="avisCard"><div class="quoteMark">"</div><p>The garden, the pool, the hosts — everything felt genuinely lived-in and warm.</p><div class="who">James R. · United Kingdom</div></div>
+    <div class="avisCard"><div class="quoteMark">"</div><p>Le jasmin le soir, la piscine l'après-midi. On y retourne cet été.</p><div class="who">Sophie & Marc · Belgique</div></div>
+    <div class="avisCard"><div class="quoteMark">"</div><p>A quiet, authentic corner of Guadeloupe. Not a resort — a home.</p><div class="who">Anna K. · Germany</div></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footGrid">
+    <div>
+      <div class="footLogo">La Belle <em style="font-style:italic;color:var(--coral)">Créole</em></div>
+      <p>Un gîte familial à Sainte-Anne, entre jardin, hibiscus et piscine partagée.</p>
+    </div>
+    <div class="footCol">
+      <div class="colLabel">NAVIGATION</div>
+      <a href="#logements">Logements</a>
+      <a href="#experience">Expériences</a>
+      <a href="#histoire">Histoire</a>
+      <a href="#disponibilites">Réserver</a>
+    </div>
+    <div class="footCol">
+      <div class="colLabel">SUIVEZ-NOUS</div>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+  <div class="footBottom">
+    <div>La Belle Créole · Sainte-Anne, Guadeloupe · Antilles françaises</div>
+    <div class="legal">
+      <a href="#">Mentions légales</a>
+      <a href="#">Confidentialité</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Config éditoriale
+  const SHOW_PRICES = true;
+  const DEFAULT_FLOWER = 'hibiscus';
+  const WHATSAPP_PHONE = '590690000000'; // à remplacer par le vrai numéro
+
+  const FLOWERS = [
+    { id: 'hibiscus', name: 'Villa Hibiscus', dot: '#E8732A' },
+    { id: 'croton', name: 'Croton', dot: '#C0392B' },
+    { id: 'isora', name: 'Isora', dot: '#E05C45' },
+    { id: 'jasmin', name: 'Jasmin', dot: '#D4A84B' },
+    { id: 'alamanda', name: 'Alamanda', dot: '#F4CF2F' }
+  ];
+
+  if (!SHOW_PRICES) document.querySelectorAll('.priceTag').forEach(el => el.style.display = 'none');
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Falling petals
+  const petalColors = ['#E8732A', '#F0A06A', '#F2C46A'];
+  const petalsWrap = document.getElementById('petals');
+  for (let i = 0; i < 10; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 10 + (i % 4) * 4;
+    p.style.left = ((i * 9.7) % 100) + '%';
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.background = petalColors[i % petalColors.length];
+    p.style.animationDuration = (14 + (i % 5) * 3) + 's';
+    p.style.animationDelay = (-(i * 2.3)) + 's';
+    petalsWrap.appendChild(p);
+  }
+
+  // Booking form
+  let selectedFlower = DEFAULT_FLOWER;
+  let guests = 2;
+  const flowerOptionsEl = document.getElementById('flowerOptions');
+  const arrivalEl = document.getElementById('arrival');
+  const departureEl = document.getElementById('departure');
+  const guestCountEl = document.getElementById('guestCount');
+  const whatsappBtn = document.getElementById('whatsappBtn');
+
+  function renderFlowerOptions() {
+    flowerOptionsEl.innerHTML = '';
+    FLOWERS.forEach(f => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'flowerOpt' + (f.id === selectedFlower ? ' active' : '');
+      btn.innerHTML = `<span class="dot" style="background:${f.dot}"></span>${f.name}`;
+      btn.addEventListener('click', () => { selectedFlower = f.id; renderFlowerOptions(); updateWhatsappLink(); });
+      flowerOptionsEl.appendChild(btn);
+    });
+  }
+
+  function updateWhatsappLink() {
+    const flowerName = FLOWERS.find(f => f.id === selectedFlower).name;
+    const msg = `Bonjour, je souhaite vérifier la disponibilité de ${flowerName} du ${arrivalEl.value || '...'} au ${departureEl.value || '...'} pour ${guests} personne(s).`;
+    whatsappBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
+  }
+
+  document.getElementById('incGuests').addEventListener('click', () => { guests = Math.min(10, guests + 1); guestCountEl.textContent = guests; updateWhatsappLink(); });
+  document.getElementById('decGuests').addEventListener('click', () => { guests = Math.max(1, guests - 1); guestCountEl.textContent = guests; updateWhatsappLink(); });
+  arrivalEl.addEventListener('change', updateWhatsappLink);
+  departureEl.addEventListener('change', updateWhatsappLink);
+
+  renderFlowerOptions();
+  updateWhatsappLink();
+</script>
+</body>
+</html>
