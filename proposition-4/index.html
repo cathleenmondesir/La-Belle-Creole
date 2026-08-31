@@ -76,7 +76,9 @@
 
   #logements { padding: 140px 6vw 100px; max-width: 1440px; margin: 0 auto; }
   .flowerGrid { display: grid; grid-template-columns: repeat(6,1fr); grid-template-rows: auto auto; gap: 22px; }
-  .flowerCard { position: relative; border-radius: 6px; overflow: hidden; }
+  .flowerCard { position: relative; border-radius: 6px; overflow: hidden; cursor: pointer; }
+  .flowerCard .lbHint { position: absolute; top: 12px; right: 14px; z-index: 2; background: rgba(0,0,0,0.35); color: #fff; font-size: 11px; letter-spacing: .06em; padding: 4px 9px; border-radius: 20px; pointer-events: none; opacity: 0; transition: opacity .2s; }
+  .flowerCard:hover .lbHint { opacity: 1; }
   .flowerCard .inner { position: absolute; inset: 0; padding: 26px; display: flex; flex-direction: column; justify-content: space-between; }
   .flowerCard h3 { font-family: 'Cormorant Garamond', serif; font-style: italic; margin: 0 0 8px; }
   .flowerCard p { font-weight: 300; margin: 0 0 12px; }
@@ -228,6 +230,7 @@
   </div>
   <div class="flowerGrid">
     <div id="card-hibiscus" class="flowerCard">
+      <span class="lbHint">📷 Voir les photos</span>
       <div class="inner">
         <div style="display:flex;justify-content:space-between;align-items:flex-start">
           <div class="kind">VILLA CRÉOLE · 2 CHAMBRES</div>
@@ -245,6 +248,7 @@
       </div>
     </div>
     <div id="card-croton" class="flowerCard">
+      <span class="lbHint">📷 Voir les photos</span>
       <img src="../photos/web/croton-terrasse.jpg" alt="Appartement Croton — terrasse" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:inherit">
       <div class="inner" style="position:relative;z-index:1;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);border-radius:inherit">
         <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
@@ -256,6 +260,7 @@
       </div>
     </div>
     <div id="card-isora" class="flowerCard">
+      <span class="lbHint">📷 Voir les photos</span>
       <img src="../photos/web/isora-main.jpg" alt="Appartement Isora" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:inherit">
       <div class="inner" style="position:relative;z-index:1;background:linear-gradient(to top,rgba(0,0,0,0.60) 0%,rgba(0,0,0,0.15) 60%,transparent 100%);border-radius:inherit">
         <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
@@ -267,6 +272,7 @@
       </div>
     </div>
     <div id="card-jasmin" class="flowerCard">
+      <span class="lbHint">📷 Voir les photos</span>
       <img src="../photos/web/jasmin-main.jpg" alt="Appartement Jasmin" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:inherit">
       <div class="inner" style="position:relative;z-index:1;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);border-radius:inherit">
         <div class="kind">APPARTEMENT · 2 CH + CANAPÉ-LIT</div>
@@ -278,6 +284,7 @@
       </div>
     </div>
     <div id="card-alamanda" class="flowerCard">
+      <span class="lbHint">📷 Voir les photos</span>
       <img src="../photos/web/alamanda-main.jpg" alt="Appartement Alamanda" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:inherit">
       <div class="inner" style="position:relative;z-index:1;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);border-radius:inherit">
         <div class="kind">APPARTEMENT · 1 CH + CANAPÉ-LIT</div>
@@ -486,6 +493,108 @@
 
   renderFlowerOptions();
   updateWhatsappLink();
+
+  /* ── LIGHTBOX ── */
+  const GALLERY = {
+    hibiscus: [
+      { src: '../photos/web/hibiscus-5134.jpg', caption: 'Salon — Villa Hibiscus' },
+      { src: '../photos/web/hibiscus-5132.jpg', caption: 'Salon — plafond à poutres' },
+      { src: '../photos/web/hibiscus-5129.jpg', caption: 'Cuisine' },
+      { src: '../photos/web/hibiscus-5124.jpg', caption: 'Cuisine créole' },
+      { src: '../photos/web/hibiscus-5123.jpg', caption: 'Salle de bain' },
+    ],
+    croton: [
+      { src: '../photos/web/croton-terrasse.jpg', caption: 'Terrasse — Croton' },
+      { src: '../photos/web/croton-chambre.jpg', caption: 'Chambre — Croton' },
+    ],
+    isora: [
+      { src: '../photos/web/isora-main.jpg', caption: 'Appartement Isora' },
+    ],
+    jasmin: [
+      { src: '../photos/web/jasmin-main.jpg', caption: 'Appartement Jasmin' },
+      { src: '../photos/web/jasmin-chambre1.jpg', caption: 'Chambre 1 — Jasmin' },
+      { src: '../photos/web/jasmin-chambre2.jpg', caption: 'Chambre 2 — Jasmin' },
+      { src: '../photos/web/jasmin-chambre3.jpg', caption: 'Chambre 3 — Jasmin' },
+    ],
+    alamanda: [
+      { src: '../photos/web/alamanda-main.jpg', caption: 'Terrasse — Alamanda' },
+      { src: '../photos/web/alamanda-2.jpg', caption: 'Salon — Alamanda' },
+      { src: '../photos/web/alamanda-3.jpg', caption: 'Chambre principale — Alamanda' },
+      { src: '../photos/web/alamanda-4.jpg', caption: 'Chambre avec canapé-lit — Alamanda' },
+    ],
+  };
+
+  let lbPhotos = [], lbIndex = 0;
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+  const lbCount = document.getElementById('lbCount');
+
+  function lbOpen(id, idx) {
+    lbPhotos = GALLERY[id] || [];
+    if (!lbPhotos.length) return;
+    lbIndex = idx || 0;
+    lbRender();
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function lbRender() {
+    const p = lbPhotos[lbIndex];
+    lbImg.src = p.src;
+    lbImg.alt = p.caption;
+    lbCaption.textContent = p.caption;
+    lbCount.textContent = (lbIndex + 1) + ' / ' + lbPhotos.length;
+    document.getElementById('lbPrev').style.visibility = lbIndex > 0 ? 'visible' : 'hidden';
+    document.getElementById('lbNext').style.visibility = lbIndex < lbPhotos.length - 1 ? 'visible' : 'hidden';
+  }
+
+  function lbClose() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', lbClose);
+  document.getElementById('lbPrev').addEventListener('click', () => { if (lbIndex > 0) { lbIndex--; lbRender(); } });
+  document.getElementById('lbNext').addEventListener('click', () => { if (lbIndex < lbPhotos.length - 1) { lbIndex++; lbRender(); } });
+  lb.addEventListener('click', e => { if (e.target === lb) lbClose(); });
+
+  document.addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft' && lbIndex > 0) { lbIndex--; lbRender(); }
+    if (e.key === 'ArrowRight' && lbIndex < lbPhotos.length - 1) { lbIndex++; lbRender(); }
+  });
+
+  /* touch swipe */
+  let tsX = null;
+  lb.addEventListener('touchstart', e => { tsX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (tsX === null) return;
+    const dx = e.changedTouches[0].clientX - tsX;
+    if (Math.abs(dx) > 50) { if (dx < 0 && lbIndex < lbPhotos.length - 1) { lbIndex++; lbRender(); } else if (dx > 0 && lbIndex > 0) { lbIndex--; lbRender(); } }
+    tsX = null;
+  }, { passive: true });
+
+  document.querySelectorAll('.flowerCard').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      const id = card.id.replace('card-', '');
+      if (GALLERY[id] && GALLERY[id].length) lbOpen(id, 0);
+    });
+  });
 </script>
+
+<!-- LIGHTBOX -->
+<div id="lb" hidden style="position:fixed;inset:0;z-index:9999;background:rgba(26,61,43,0.96);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px">
+  <button id="lbClose" aria-label="Fermer" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#FDF9F2;font-size:32px;cursor:pointer;line-height:1;opacity:.85">✕</button>
+  <span id="lbCount" style="position:absolute;top:22px;left:50%;transform:translateX(-50%);color:#FDF9F2;font-family:'Jost',sans-serif;font-size:13px;opacity:.7;letter-spacing:.06em"></span>
+  <button id="lbPrev" aria-label="Précédente" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
+  <button id="lbNext" aria-label="Suivante" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
+  <img id="lbImg" src="" alt="" style="max-width:min(900px,92vw);max-height:78vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+  <p id="lbCaption" style="margin-top:16px;color:#FDF9F2;font-family:'Jost',sans-serif;font-size:14px;opacity:.75;letter-spacing:.04em;text-align:center"></p>
+</div>
 </body>
 </html>
