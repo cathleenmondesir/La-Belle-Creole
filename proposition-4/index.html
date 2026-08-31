@@ -349,37 +349,57 @@
 </section>
 
 <section id="disponibilites">
-  <div class="bookWrap">
+  <div class="bookWrap" style="max-width:960px">
     <div class="sectionHead" style="margin-bottom:56px">
-      <div class="eyebrow">DISPONIBILITÉS</div>
+      <div class="eyebrow">DISPONIBILITÉS & RÉSERVATION</div>
       <h2>Réserver <em>votre séjour</em></h2>
-      <p style="opacity:.75">Réponse sous 24h · Réservation sans commission de plateforme</p>
+      <p style="opacity:.75">Paiement sécurisé · Sans commission · Réponse sous 24h</p>
     </div>
-    <div class="bookCard">
-      <div style="margin-bottom:28px">
-        <div class="fieldLabel" style="margin-bottom:14px">CHOISISSEZ VOTRE LOGEMENT</div>
-        <div id="flowerOptions" style="display:flex;gap:10px;flex-wrap:wrap"></div>
+
+    <!-- AVANTAGES RÉSERVATION DIRECTE -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px">
+      <div style="background:var(--coconut);border-radius:10px;padding:24px;text-align:center">
+        <div style="font-size:28px;margin-bottom:10px">💳</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--stone);margin-bottom:6px">0% de commission</div>
+        <div style="font-size:13px;opacity:.65;line-height:1.5">Réservez directement et économisez vs Booking.com</div>
       </div>
-      <div class="bookRow3">
-        <div>
-          <label class="fieldLabel">ARRIVÉE</label>
-          <input type="date" id="arrival">
-        </div>
-        <div>
-          <label class="fieldLabel">DÉPART</label>
-          <input type="date" id="departure">
-        </div>
-        <div>
-          <label class="fieldLabel">VOYAGEURS</label>
-          <div class="guestStepper">
-            <button id="decGuests" type="button">−</button>
-            <span id="guestCount">2</span>
-            <button id="incGuests" type="button">+</button>
-          </div>
-        </div>
+      <div style="background:var(--coconut);border-radius:10px;padding:24px;text-align:center">
+        <div style="font-size:28px;margin-bottom:10px">📅</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--stone);margin-bottom:6px">Disponibilités en temps réel</div>
+        <div style="font-size:13px;opacity:.65;line-height:1.5">Calendrier synchronisé avec tous nos canaux</div>
       </div>
-      <a id="whatsappBtn" class="whatsappBtn" target="_blank" rel="noopener" href="#">Vérifier la disponibilité sur WhatsApp</a>
-      <a class="emailLink" href="mailto:contact@labellecreole-guadeloupe.com?subject=Demande de disponibilité">ou écrire directement par email</a>
+      <div style="background:var(--coconut);border-radius:10px;padding:24px;text-align:center">
+        <div style="font-size:28px;margin-bottom:10px">🤝</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--stone);margin-bottom:6px">Contact direct</div>
+        <div style="font-size:13px;opacity:.65;line-height:1.5">Vous parlez directement à la famille, pas à un call center</div>
+      </div>
+    </div>
+
+    <!-- WIDGET SMOOBU (à remplacer par le code Smoobu) -->
+    <div id="smoobu-widget" style="background:var(--coconut);border-radius:12px;padding:48px;box-shadow:0 30px 70px rgba(92,74,56,0.1);margin-bottom:32px">
+      <!-- ↓↓ COLLER ICI LE CODE WIDGET SMOOBU ↓↓ -->
+      <div style="text-align:center;padding:40px 0;border:2px dashed rgba(92,74,56,0.2);border-radius:8px">
+        <div style="font-size:36px;margin-bottom:16px">📅</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--stone);margin-bottom:10px">Moteur de réservation</div>
+        <div style="font-size:14px;opacity:.6;line-height:1.7;max-width:340px;margin:0 auto">Le widget de réservation Smoobu sera affiché ici une fois le compte configuré.</div>
+      </div>
+      <!-- ↑↑ FIN CODE WIDGET SMOOBU ↑↑ -->
+    </div>
+
+    <!-- ALTERNATIVE WHATSAPP / EMAIL -->
+    <div style="background:var(--coconut);border-radius:12px;padding:32px 40px;box-shadow:0 30px 70px rgba(92,74,56,0.1)">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--stone);margin-bottom:6px">Vous préférez nous contacter directement ?</div>
+      <div style="font-size:13px;opacity:.65;margin-bottom:24px">Nous répondons en général dans la journée.</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a id="whatsappBtn" class="whatsappBtn" target="_blank" rel="noopener" href="#" style="flex:1;min-width:200px;margin-bottom:0;display:flex;align-items:center;justify-content:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+        <a class="emailLink" href="mailto:contact@labellecreole-guadeloupe.com?subject=Demande de disponibilité" style="flex:1;min-width:200px;display:flex;align-items:center;justify-content:center;gap:8px;padding:17px;border-radius:10px;border:1px solid rgba(92,74,56,0.2);font-size:14px;color:var(--stone);opacity:1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          Email
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -470,39 +490,9 @@
     petalsWrap.appendChild(p);
   }
 
-  let selectedFlower = DEFAULT_FLOWER;
-  let guests = 2;
-  const flowerOptionsEl = document.getElementById('flowerOptions');
-  const arrivalEl = document.getElementById('arrival');
-  const departureEl = document.getElementById('departure');
-  const guestCountEl = document.getElementById('guestCount');
   const whatsappBtn = document.getElementById('whatsappBtn');
-
-  function renderFlowerOptions() {
-    flowerOptionsEl.innerHTML = '';
-    FLOWERS.forEach(f => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'flowerOpt' + (f.id === selectedFlower ? ' active' : '');
-      btn.innerHTML = `<span class="dot" style="background:${f.dot}"></span>${f.name}`;
-      btn.addEventListener('click', () => { selectedFlower = f.id; renderFlowerOptions(); updateWhatsappLink(); });
-      flowerOptionsEl.appendChild(btn);
-    });
-  }
-
-  function updateWhatsappLink() {
-    const flowerName = FLOWERS.find(f => f.id === selectedFlower).name;
-    const msg = `Bonjour, je souhaite vérifier la disponibilité de ${flowerName} du ${arrivalEl.value || '...'} au ${departureEl.value || '...'} pour ${guests} personne(s).`;
-    whatsappBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
-  }
-
-  document.getElementById('incGuests').addEventListener('click', () => { guests = Math.min(10, guests + 1); guestCountEl.textContent = guests; updateWhatsappLink(); });
-  document.getElementById('decGuests').addEventListener('click', () => { guests = Math.max(1, guests - 1); guestCountEl.textContent = guests; updateWhatsappLink(); });
-  arrivalEl.addEventListener('change', updateWhatsappLink);
-  departureEl.addEventListener('change', updateWhatsappLink);
-
-  renderFlowerOptions();
-  updateWhatsappLink();
+  const msg = `Bonjour, je souhaite faire une demande de réservation à La Belle Créole.`;
+  whatsappBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msg)}`;
 
   /* ── LIGHTBOX ── */
   const GALLERY = {
