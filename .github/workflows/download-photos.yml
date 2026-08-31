@@ -1,0 +1,97 @@
+name: Download & Optimize Apartment Photos
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  download-photos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/nifty-hopper-xnjzkc
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Pillow
+        run: pip install Pillow
+
+      - name: Download and optimize photos
+        run: |
+          python3 << 'PYEOF'
+          import urllib.request
+          import os
+          from PIL import Image, ImageOps
+          import io
+
+          os.makedirs("photos/web", exist_ok=True)
+
+          photos = {
+            # JASMIN
+            # Main: largest file (11.9MB), 8:00 AM fresh morning light
+            "jasmin-main.jpg": "https://www.dropbox.com/scl/fi/2u9s2hjki41lsl3b3ug4z/Photo-05-08-2026-08-00-28.jpg?rlkey=ta7o2p18x4jbyy2ytlfgdgs3x&dl=1",
+            # Runner-up 2: 11.6MB, 8:18 AM
+            "jasmin-2.jpg":    "https://www.dropbox.com/scl/fi/obgy6qpmuawbe49l8pi2v/Photo-05-08-2026-08-18-07.jpg?rlkey=cw7v6kqh4xbbjaxbm9wfn95wo&dl=1",
+            # Runner-up 3: 11.3MB, 8:13 AM
+            "jasmin-3.jpg":    "https://www.dropbox.com/scl/fi/of1o7wm0a1eq847xewwjf/Photo-05-08-2026-08-13-18.jpg?rlkey=gdhgaihvvb5hgdn7xnb10pm4z&dl=1",
+            # ISORA
+            # Main: largest file by far (13.2MB), 10:10 AM good light
+            "isora-main.jpg":  "https://www.dropbox.com/scl/fi/qg99s6yv1qx0beagkrm5s/Photo-05-08-2026-10-10-26.jpg?rlkey=v8ze6ixch8trrqigfqi8oh9tt&dl=1",
+            # Runner-up 2: 11.3MB, 10:09 AM
+            "isora-2.jpg":     "https://www.dropbox.com/scl/fi/pavrjbxfq8kuk4dhlgc77/Photo-05-08-2026-10-09-26.jpg?rlkey=nnccj7jh0q1a5h4gmwlez2pxg&dl=1",
+            # Runner-up 3: 10.6MB, 10:45 AM
+            "isora-3.jpg":     "https://www.dropbox.com/scl/fi/hh26rxmpv1gnxbd8doagm/Photo-05-08-2026-10-45-05.jpg?rlkey=c29m7u9h833h8kk4yepcrterz&dl=1",
+            # ALAMANDA
+            # Main: largest (11.5MB), 9:43 AM good morning light
+            "alamanda-main.jpg": "https://www.dropbox.com/scl/fi/x7x1fza4tsr0daeiftdxm/Photo-05-08-2026-09-43-42.jpg?rlkey=vkmjdfmxxebvawi9oaae2prvn&dl=1",
+            # Runner-up 2: 11.3MB, 9:35 AM
+            "alamanda-2.jpg":  "https://www.dropbox.com/scl/fi/2kissor6d66uk3avkwvk3/Photo-05-08-2026-09-35-44.jpg?rlkey=h7cisifv9ubxlg8ebnbwjzrzb&dl=1",
+            # Runner-up 3: 10.7MB, 9:32 AM
+            "alamanda-3.jpg":  "https://www.dropbox.com/scl/fi/jzhixn8v1mw78jdwh2y63/Photo-05-08-2026-09-32-03.jpg?rlkey=mzlojpoow9ztz7stceewye7nx&dl=1",
+          }
+
+          MAX_SIDE = 1400
+          QUALITY = 82
+
+          for name, url in photos.items():
+            out_path = f"photos/web/{name}"
+            print(f"Downloading {name}...")
+            try:
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              with urllib.request.urlopen(req, timeout=60) as resp:
+                data = resp.read()
+              img = Image.open(io.BytesIO(data))
+              # Correct EXIF rotation
+              img = ImageOps.exif_transpose(img)
+              # Convert to RGB if needed
+              if img.mode != "RGB":
+                img = img.convert("RGB")
+              # Resize to max 1400px longest side
+              w, h = img.size
+              if max(w, h) > MAX_SIDE:
+                scale = MAX_SIDE / max(w, h)
+                img = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+              img.save(out_path, "JPEG", quality=QUALITY, optimize=True)
+              final_size = os.path.getsize(out_path)
+              print(f"  Saved {out_path} ({final_size//1024}KB, {img.size[0]}x{img.size[1]})")
+            except Exception as e:
+              print(f"  ERROR: {e}")
+          PYEOF
+
+      - name: Commit and push photos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add photos/web/jasmin-main.jpg photos/web/jasmin-2.jpg photos/web/jasmin-3.jpg
+          git add photos/web/isora-main.jpg photos/web/isora-2.jpg photos/web/isora-3.jpg
+          git add photos/web/alamanda-main.jpg photos/web/alamanda-2.jpg photos/web/alamanda-3.jpg
+          git diff --staged --stat
+          git commit -m "Add optimized apartment photos: Jasmin, Isora, Alamanda" || echo "Nothing to commit"
+          git push origin claude/nifty-hopper-xnjzkc
