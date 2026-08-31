@@ -425,6 +425,16 @@
   </div>
 </footer>
 
+<!-- LIGHTBOX -->
+<div id="lb" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,61,43,0.96);flex-direction:column;align-items:center;justify-content:center;padding:20px">
+  <button id="lbClose" aria-label="Fermer" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#FDF9F2;font-size:32px;cursor:pointer;line-height:1;opacity:.85">✕</button>
+  <span id="lbCount" style="position:absolute;top:22px;left:50%;transform:translateX(-50%);color:#FDF9F2;font-family:'Jost',sans-serif;font-size:13px;opacity:.7;letter-spacing:.06em"></span>
+  <button id="lbPrev" aria-label="Précédente" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
+  <button id="lbNext" aria-label="Suivante" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
+  <img id="lbImg" src="" alt="" style="max-width:min(900px,92vw);max-height:78vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.5)">
+  <p id="lbCaption" style="margin-top:16px;color:#FDF9F2;font-family:'Jost',sans-serif;font-size:14px;opacity:.75;letter-spacing:.04em;text-align:center"></p>
+</div>
+
 <script>
   const SHOW_PRICES = true;
   const DEFAULT_FLOWER = 'hibiscus';
@@ -535,7 +545,7 @@
     if (!lbPhotos.length) return;
     lbIndex = idx || 0;
     lbRender();
-    lb.hidden = false;
+    lb.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
 
@@ -550,7 +560,7 @@
   }
 
   function lbClose() {
-    lb.hidden = true;
+    lb.style.display = 'none';
     document.body.style.overflow = '';
     lbImg.src = '';
   }
@@ -561,7 +571,7 @@
   lb.addEventListener('click', e => { if (e.target === lb) lbClose(); });
 
   document.addEventListener('keydown', e => {
-    if (lb.hidden) return;
+    if (lb.style.display === 'none' || !lb.style.display) return;
     if (e.key === 'Escape') lbClose();
     if (e.key === 'ArrowLeft' && lbIndex > 0) { lbIndex--; lbRender(); }
     if (e.key === 'ArrowRight' && lbIndex < lbPhotos.length - 1) { lbIndex++; lbRender(); }
@@ -586,15 +596,5 @@
     });
   });
 </script>
-
-<!-- LIGHTBOX -->
-<div id="lb" hidden style="position:fixed;inset:0;z-index:9999;background:rgba(26,61,43,0.96);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px">
-  <button id="lbClose" aria-label="Fermer" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#FDF9F2;font-size:32px;cursor:pointer;line-height:1;opacity:.85">✕</button>
-  <span id="lbCount" style="position:absolute;top:22px;left:50%;transform:translateX(-50%);color:#FDF9F2;font-family:'Jost',sans-serif;font-size:13px;opacity:.7;letter-spacing:.06em"></span>
-  <button id="lbPrev" aria-label="Précédente" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
-  <button id="lbNext" aria-label="Suivante" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(253,249,242,0.12);border:none;color:#FDF9F2;font-size:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
-  <img id="lbImg" src="" alt="" style="max-width:min(900px,92vw);max-height:78vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,0.5)">
-  <p id="lbCaption" style="margin-top:16px;color:#FDF9F2;font-family:'Jost',sans-serif;font-size:14px;opacity:.75;letter-spacing:.04em;text-align:center"></p>
-</div>
 </body>
 </html>
