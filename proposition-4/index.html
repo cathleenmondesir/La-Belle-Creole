@@ -375,15 +375,30 @@
       </div>
     </div>
 
-    <!-- WIDGET SMOOBU (à remplacer par le code Smoobu) -->
-    <div id="smoobu-widget" style="background:var(--coconut);border-radius:12px;padding:48px;box-shadow:0 30px 70px rgba(92,74,56,0.1);margin-bottom:32px">
-      <!-- ↓↓ COLLER ICI LE CODE WIDGET SMOOBU ↓↓ -->
-      <div style="text-align:center;padding:40px 0;border:2px dashed rgba(92,74,56,0.2);border-radius:8px">
-        <div style="font-size:36px;margin-bottom:16px">📅</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--stone);margin-bottom:10px">Moteur de réservation</div>
-        <div style="font-size:14px;opacity:.6;line-height:1.7;max-width:340px;margin:0 auto">Le widget de réservation Smoobu sera affiché ici une fois le compte configuré.</div>
+    <!-- WIDGET CALENDRIER DISPONIBILITÉS -->
+    <div style="background:var(--coconut);border-radius:12px;padding:36px 40px;box-shadow:0 30px 70px rgba(92,74,56,0.1);margin-bottom:32px">
+
+      <!-- Sélecteur de logement -->
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;letter-spacing:.08em;opacity:.6;margin-bottom:12px">CHOISISSEZ VOTRE LOGEMENT</div>
+        <div id="calTabs" style="display:flex;gap:8px;flex-wrap:wrap"></div>
       </div>
-      <!-- ↑↑ FIN CODE WIDGET SMOOBU ↑↑ -->
+
+      <!-- Navigation mois -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <button id="calPrev" style="background:none;border:1px solid rgba(92,74,56,0.2);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:16px;color:var(--stone)">‹</button>
+        <span id="calMonthLabel" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--stone)"></span>
+        <button id="calNext" style="background:none;border:1px solid rgba(92,74,56,0.2);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:16px;color:var(--stone)">›</button>
+      </div>
+
+      <!-- Calendrier -->
+      <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:16px"></div>
+
+      <div style="display:flex;gap:20px;font-size:12px;opacity:.65;margin-bottom:12px">
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:var(--sand);border:1px solid rgba(92,74,56,0.2);display:inline-block"></span>Disponible</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:#E8732A;display:inline-block"></span>Réservé</span>
+      </div>
+      <div id="calStatus" style="text-align:center;font-size:13px;opacity:.55;min-height:20px"></div>
     </div>
 
     <!-- ALTERNATIVE WHATSAPP / EMAIL -->
@@ -576,6 +591,116 @@
     if (Math.abs(dx) > 50) { if (dx < 0 && lbIndex < lbPhotos.length - 1) { lbIndex++; lbRender(); } else if (dx > 0 && lbIndex > 0) { lbIndex--; lbRender(); } }
     tsX = null;
   }, { passive: true });
+
+  /* ── CALENDRIER DISPONIBILITÉS ── */
+  const CAL_FEEDS = {
+    hibiscus:  'https://renttools.io/api/calendar/feed/296/for-booking.ics',
+    isora:     'https://renttools.io/api/calendar/feed/297/for-booking.ics',
+    alamanda:  'https://renttools.io/api/calendar/feed/298/for-booking.ics',
+    jasmin:    'https://renttools.io/api/calendar/feed/299/for-booking.ics',
+    croton:    'https://renttools.io/api/calendar/feed/300/for-booking.ics',
+  };
+  const CAL_LABELS = { hibiscus:'Villa Hibiscus', isora:'Isora', alamanda:'Alamanda', jasmin:'Jasmin', croton:'Croton' };
+  const CORS_PROXY = 'https://corsproxy.io/?';
+
+  let calCurrentProp = 'hibiscus';
+  let calYear = new Date().getFullYear();
+  let calMonth = new Date().getMonth();
+  let calBooked = new Set();
+
+  /* Parse iCal et retourne un Set de dates YYYY-MM-DD */
+  function parseIcal(text) {
+    const dates = new Set();
+    const events = text.split('BEGIN:VEVENT');
+    events.slice(1).forEach(ev => {
+      const dtstart = ev.match(/DTSTART[^:]*:(\d{8})/);
+      const dtend   = ev.match(/DTEND[^:]*:(\d{8})/);
+      if (!dtstart || !dtend) return;
+      const start = dtstart[1], end = dtend[1];
+      let d = new Date(+start.slice(0,4), +start.slice(4,6)-1, +start.slice(6,8));
+      const e = new Date(+end.slice(0,4),   +end.slice(4,6)-1,   +end.slice(6,8));
+      while (d < e) {
+        dates.add(d.toISOString().slice(0,10));
+        d.setDate(d.getDate() + 1);
+      }
+    });
+    return dates;
+  }
+
+  async function calLoad(prop) {
+    document.getElementById('calStatus').textContent = 'Chargement…';
+    try {
+      const url = CORS_PROXY + encodeURIComponent(CAL_FEEDS[prop]);
+      const r = await fetch(url);
+      const text = await r.text();
+      calBooked = parseIcal(text);
+      document.getElementById('calStatus').textContent = '';
+    } catch(e) {
+      calBooked = new Set();
+      document.getElementById('calStatus').textContent = 'Calendrier temporairement indisponible';
+    }
+    calRender();
+  }
+
+  function calRender() {
+    const grid = document.getElementById('calGrid');
+    const label = document.getElementById('calMonthLabel');
+    const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    label.textContent = months[calMonth] + ' ' + calYear;
+
+    const days = ['Lu','Ma','Me','Je','Ve','Sa','Di'];
+    const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=dim
+    const offset = (firstDay === 0 ? 6 : firstDay - 1); // lundi=0
+    const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+    const today = new Date().toISOString().slice(0,10);
+
+    let html = days.map(d => `<div style="text-align:center;font-size:11px;letter-spacing:.06em;opacity:.5;padding:4px 0">${d}</div>`).join('');
+    for (let i=0; i<offset; i++) html += '<div></div>';
+    for (let d=1; d<=daysInMonth; d++) {
+      const dateStr = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const booked = calBooked.has(dateStr);
+      const past = dateStr < today;
+      const bg = booked ? '#E8732A' : past ? 'rgba(92,74,56,0.06)' : 'var(--sand)';
+      const color = booked ? '#fff' : past ? 'rgba(92,74,56,0.3)' : 'var(--stone)';
+      const border = booked ? 'none' : '1px solid rgba(92,74,56,0.12)';
+      html += `<div style="text-align:center;padding:7px 2px;border-radius:6px;font-size:13px;background:${bg};color:${color};border:${border}">${d}</div>`;
+    }
+    grid.innerHTML = html;
+  }
+
+  function calSetProp(prop) {
+    calCurrentProp = prop;
+    document.querySelectorAll('.calTab').forEach(t => {
+      const active = t.dataset.prop === prop;
+      t.style.background = active ? 'var(--orange)' : 'transparent';
+      t.style.color = active ? '#fff' : 'var(--stone)';
+      t.style.borderColor = active ? 'var(--orange)' : 'rgba(92,74,56,0.2)';
+    });
+    calLoad(prop);
+  }
+
+  /* Tabs logements */
+  const calTabsEl = document.getElementById('calTabs');
+  Object.entries(CAL_LABELS).forEach(([id, name]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'calTab';
+    btn.dataset.prop = id;
+    btn.textContent = name;
+    btn.style.cssText = 'padding:8px 16px;border-radius:100px;border:1px solid rgba(92,74,56,0.2);background:transparent;color:var(--stone);font-family:"Jost",sans-serif;font-size:13px;cursor:pointer;transition:all .2s';
+    btn.addEventListener('click', () => calSetProp(id));
+    calTabsEl.appendChild(btn);
+  });
+
+  document.getElementById('calPrev').addEventListener('click', () => {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } calRender();
+  });
+  document.getElementById('calNext').addEventListener('click', () => {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } calRender();
+  });
+
+  /* Init */
+  calSetProp('hibiscus');
 
   document.querySelectorAll('.flowerCard').forEach(card => {
     card.style.cursor = 'pointer';
